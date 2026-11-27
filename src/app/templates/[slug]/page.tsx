@@ -28,13 +28,23 @@ export async function generateMetadata({
   }
 
   const categoryLabel = getCategoryLabel(template.category);
+  const canonicalPath = `/templates/${template.slug}/`;
   return {
     title: `${template.name} — ${categoryLabel}`,
     description: template.description,
+    alternates: {
+      canonical: canonicalPath,
+    },
     openGraph: {
       title: `${template.name} (${categoryLabel})`,
       description: template.description,
+      url: canonicalPath,
       type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${template.name} (${categoryLabel})`,
+      description: template.description,
     },
   };
 }

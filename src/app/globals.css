@@ -92,11 +92,71 @@ html {
   animation-play-state: paused;
 }
 
+@keyframes xgd-marquee-up {
+  0% {
+    transform: translate3d(0, 0, 0);
+  }
+  100% {
+    transform: translate3d(0, -50%, 0);
+  }
+}
+
+@keyframes xgd-marquee-down {
+  0% {
+    transform: translate3d(0, -50%, 0);
+  }
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.marquee-mask-vertical {
+  mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+  -webkit-mask-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    black 10%,
+    black 90%,
+    transparent 100%
+  );
+}
+
+.marquee-col-up {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+  animation: xgd-marquee-up 34s linear infinite;
+}
+
+.marquee-col-down {
+  display: flex;
+  flex-direction: column;
+  will-change: transform;
+  animation: xgd-marquee-down 38s linear infinite;
+}
+
+.marquee-col-up:hover,
+.marquee-col-down:hover {
+  animation-play-state: paused;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .marquee-track-left {
     animation-duration: 70s;
   }
   .marquee-track-right {
     animation-duration: 75s;
+  }
+  .marquee-col-up {
+    animation-duration: 85s;
+  }
+  .marquee-col-down {
+    animation-duration: 90s;
   }
 }

@@ -23,6 +23,10 @@ export async function generateMetadata({
   return {
     title: `${template.brandTitle} — Bản Demo Trực Tiếp`,
     description: template.tagline,
+    robots: {
+      index: false,
+      follow: false,
+    },
   };
 }
 

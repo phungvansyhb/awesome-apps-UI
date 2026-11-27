@@ -106,3 +106,17 @@
   - `src/components/gallery/StudioHeader.tsx`, `AgencyHero.tsx`, `GalleryShowcase.tsx`, `TemplateCard.tsx`, `src/app/page.tsx`
   - `src/templates/lumiere-noi-that/index.tsx`, `src/templates/kova-ai-saas/index.tsx`
 - **Verification Gate**: `npm run typecheck && npm run lint && npm run build` ✅
+
+---
+
+### [x] `UNIT-08`: Technical SEO Foundation & Branded Error Pages (Static Export)
+- **Files**:
+  - `src/config/site.ts` (`siteUrl` mặc định `https://xuong-giao-dien.pages.dev`)
+  - `src/app/sitemap.ts` (`out/sitemap.xml` sinh động từ `TEMPLATE_REGISTRY`)
+  - `src/app/robots.ts` (`out/robots.txt`, chặn index `/preview/` và `/500/`)
+  - `src/app/manifest.ts` (`out/manifest.webmanifest`) & `src/app/icon.svg` (favicon thương hiệu)
+  - `src/app/not-found.tsx` (`out/404.html`), `src/app/error.tsx`, `src/app/global-error.tsx`, `src/app/500/page.tsx` (`out/500/index.html`)
+  - `src/app/layout.tsx` (`metadataBase`, canonical, keywords, robots, Twitter Card)
+  - `src/app/page.tsx` (JSON-LD `WebSite` + `Organization`)
+  - `src/app/templates/[slug]/page.tsx` (canonical riêng từng mẫu) & `src/app/preview/[slug]/page.tsx` (`noindex, nofollow`)
+- **Verification Gate**: `npm run typecheck && npm run lint && npm run build` ✅

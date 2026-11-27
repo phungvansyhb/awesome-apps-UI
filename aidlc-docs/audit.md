@@ -191,3 +191,56 @@
 - **Artifacts & Files Updated**:
   - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận lịch sử commit & push bản sửa lỗi `SafeImage` & `PreviewShell`.
 - **Verification & Gate Status**: Đã qua `npm run typecheck && npm run lint && npm run build`; tiến hành `git add`, `git commit`, `git push`.
+
+---
+
+## [2026-11-27T06:12:20Z] — Prompt 16: Upgrade Feedback Section to Vertical Scrolling Columns & Real Portrait Avatars
+- **Phase / Stage**: `CONSTRUCTION / UX Polish (WallOfLove & AgencyHero)`
+- **User Input**: `"Mục feed back làm layout column theo chiều dọc đi và lấy ảnh avatar người chứ ko dùng mặc định"`
+- **Clarifications / Decisions**:
+  - Chuyển `WallOfLoveSection` sang bố cục **3 cột dọc chuyển động ngược chiều** (Cột 1 đi lên, Cột 2 đi xuống, Cột 3 đi lên — rê chuột tự tạm dừng, có mask mờ mềm cạnh trên/dưới) với 9 đánh giá khách hàng.
+  - Thay toàn bộ avatar chữ cái mặc định (cả 9 thẻ trong `WallOfLoveSection` và 4 avatar Social Proof trong `AgencyHero`) bằng ảnh chân dung người thật từ Unsplash (đã kiểm chứng 9/9 trả mã `200 OK`).
+- **Artifacts & Files Updated**:
+  - `src/app/globals.css` — Bổ sung keyframes `xgd-marquee-up` / `xgd-marquee-down`, `.marquee-mask-vertical`, `.marquee-col-up` / `.marquee-col-down`.
+  - `src/components/gallery/WallOfLoveSection.tsx` — Thiết kế lại thành 3 cột dọc có ảnh chân dung thật qua `SafeImage`.
+  - `src/components/gallery/AgencyHero.tsx` — Thay 4 vòng tròn chữ cái đầu bằng ảnh chân dung thật.
+  - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận nâng cấp mục đánh giá khách hàng.
+- **Verification & Gate Status**: `npm run typecheck && npm run lint && npm run build` PASS (0 lỗi, 9/9 URL ảnh chân dung trả `200 OK`).
+
+---
+
+## [2026-11-27T06:16:30Z] — Prompt 17: Add Smooth Count-Up Animation to Hero Section Numbers
+- **Phase / Stage**: `CONSTRUCTION / UX Polish (AgencyHero AnimatedCounter)`
+- **User Input**: `"Phần các còn số ở phần hero sections , làm hiệu ứng chạy đi"`
+- **Clarifications / Decisions**:
+  - Thêm component `AnimatedCounter` dùng `framer-motion` (`animate` + `useInView` + `tabular-nums`) chạy đếm số mượt mà từ `0` lên giá trị thực cho toàn bộ chỉ số ở Hero (`02` mẫu flagship, `100%` tiếng Việt, `3` khung thiết bị, và `40+` thương hiệu tin chọn).
+- **Artifacts & Files Updated**:
+  - `src/components/gallery/AgencyHero.tsx` — Tích hợp `AnimatedCounter` cho tất cả các con số trên Hero.
+  - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận bổ sung hiệu ứng chạy số Hero.
+- **Verification & Gate Status**: `npm run typecheck && npm run lint && npm run build` PASS (0 lỗi).
+
+---
+
+## [2026-11-27T06:19:30Z] — Prompt 18: Execute `UNIT-08` — Technical SEO (`sitemap.xml`, `robots.txt`, `manifest`, JSON-LD, Canonicals) & Branded Error Pages (`404`, `error`, `global-error`, `/500/`)
+- **Phase / Stage**: `CONSTRUCTION / UNIT-08: Technical SEO & Error Pages`
+- **User Input**: `"thêm sitemap , robot.txt , not found page , 500 page ,.. cho web để đảm bảo SEO"`
+- **Clarifications / Decisions**:
+  - Cấu hình toàn bộ chuẩn Technical SEO tương thích Static Export (`force-static`) cho tên miền `https://xuong-giao-dien.pages.dev` (có thể ghi đè qua `NEXT_PUBLIC_SITE_URL`).
+  - Loại trừ `/preview/` khỏi `sitemap.xml` và gắn `Disallow: /preview/` + `noindex, nofollow` để tránh trùng lặp nội dung trên Google; giữ `/templates/[slug]/` là trang canonical chính.
+  - Tạo đầy đủ trang lỗi theo nhận diện Sáng/Tối: `not-found.tsx` (404), `error.tsx`, `global-error.tsx`, và trang tĩnh `/500/`.
+- **Artifacts & Files Updated**:
+  - `src/config/site.ts`, `src/app/icon.svg`, `src/app/sitemap.ts`, `src/app/robots.ts`, `src/app/manifest.ts`.
+  - `src/app/not-found.tsx`, `src/app/error.tsx`, `src/app/global-error.tsx`, `src/app/500/page.tsx`.
+  - `src/app/layout.tsx`, `src/app/page.tsx`, `src/app/templates/[slug]/page.tsx`, `src/app/preview/[slug]/page.tsx`.
+  - [`aidlc-docs/aidlc-state.md`](aidlc-state.md), [`aidlc-docs/construction/plans/construction-plan.md`](construction/plans/construction-plan.md), [`aidlc-docs/audit.md`](audit.md).
+- **Verification & Gate Status**: `npm run typecheck && npm run lint && npm run build` PASS (xác nhận xuất đầy đủ `out/robots.txt`, `out/sitemap.xml`, `out/manifest.webmanifest`, `out/404.html`, `out/500/index.html`, `out/icon.svg`).
+
+---
+
+## [2026-11-27T06:20:34Z] — Prompt 19: Commit & Push Vertical Wall of Love, Hero Animated Counters & Full Technical SEO / Error Pages (`UNIT-08`)
+- **Phase / Stage**: `OPERATIONS / Release Deployment`
+- **User Input**: `"commit và push"`
+- **Clarifications / Decisions**: Commit toàn bộ thay đổi gồm Feedback 3 cột dọc + ảnh chân dung thật, hiệu ứng chạy số Hero (`AnimatedCounter`) và trọn bộ Technical SEO (`sitemap.xml`, `robots.txt`, `manifest.webmanifest`, `icon.svg`, JSON-LD, canonicals) + trang lỗi (`404`, `error`, `global-error`, `/500/`) lên `origin/main`.
+- **Artifacts & Files Updated**:
+  - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận lịch sử commit & push.
+- **Verification & Gate Status**: Đã qua `npm run typecheck && npm run lint && npm run build` (12/12 trang tĩnh); tiến hành `git add`, `git commit`, `git push`.

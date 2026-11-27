@@ -10,6 +10,7 @@ export interface SiteContactInfo {
 
 export interface SiteConfig {
   brandName: string;
+  siteUrl: string;
   tagline: string;
   description: string;
   locale: string;
@@ -22,6 +23,9 @@ export interface SiteConfig {
 
 export const siteConfig: SiteConfig = {
   brandName: "Xưởng Giao Diện",
+  siteUrl: (
+    process.env.NEXT_PUBLIC_SITE_URL || "https://xuong-giao-dien.pages.dev"
+  ).replace(/\/+$/, ""),
   tagline: "Tuyển tập mẫu website tương tác cho thương hiệu dẫn đầu",
   description:
     "Khám phá thư viện mẫu giao diện website được thiết kế chỉn chu theo từng ngành hàng: Bán lẻ, Landing Page SaaS, Tài liệu Kỹ thuật, Dashboard quản trị, Portfolio sáng tạo và Dịch vụ nghỉ dưỡng.",

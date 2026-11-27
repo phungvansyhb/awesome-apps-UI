@@ -30,16 +30,48 @@ const jetBrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(siteConfig.siteUrl),
   title: {
     default: `${siteConfig.brandName} — ${siteConfig.tagline}`,
     template: `%s | ${siteConfig.brandName}`,
   },
   description: siteConfig.description,
+  keywords: [
+    "Xưởng Giao Diện",
+    "mẫu website đẹp",
+    "template website tiếng Việt",
+    "thiết kế website bán lẻ",
+    "landing page SaaS",
+    "thư viện giao diện tương tác",
+  ],
+  authors: [{ name: siteConfig.brandName, url: siteConfig.siteUrl }],
+  creator: siteConfig.brandName,
+  alternates: {
+    canonical: "/",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
     title: `${siteConfig.brandName} — ${siteConfig.tagline}`,
     description: siteConfig.description,
+    url: siteConfig.siteUrl,
+    siteName: siteConfig.brandName,
     locale: siteConfig.locale,
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${siteConfig.brandName} — ${siteConfig.tagline}`,
+    description: siteConfig.description,
   },
 };
 

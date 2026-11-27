@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { animate, motion, useInView } from "framer-motion";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 
 interface AgencyHeroProps {
@@ -10,11 +11,69 @@ interface AgencyHeroProps {
 const EASE_EDITORIAL: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
 const TRUSTED_AVATARS = [
-  { initials: "MH", bg: "bg-stone-800 text-white" },
-  { initials: "TL", bg: "bg-emerald-700 text-white" },
-  { initials: "QK", bg: "bg-amber-700 text-white" },
-  { initials: "PN", bg: "bg-zinc-700 text-white" },
+  {
+    name: "Minh Hoàng",
+    src: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&h=200&q=80",
+  },
+  {
+    name: "Thu Lan",
+    src: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=200&h=200&q=80",
+  },
+  {
+    name: "Quốc Khánh",
+    src: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&h=200&q=80",
+  },
+  {
+    name: "Phương Nhi",
+    src: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&h=200&q=80",
+  },
 ];
+
+interface AnimatedCounterProps {
+  target: number;
+  suffix?: string;
+  padZero?: boolean;
+  duration?: number;
+  delay?: number;
+}
+
+function AnimatedCounter({
+  target,
+  suffix = "",
+  padZero = false,
+  duration = 1.3,
+  delay = 0.2,
+}: AnimatedCounterProps) {
+  const ref = useRef<HTMLSpanElement | null>(null);
+  const isInView = useInView(ref, { once: true, amount: "some" });
+  const [displayValue, setDisplayValue] = useState<number>(target);
+
+  useEffect(() => {
+    if (!isInView) return;
+
+    const controls = animate(0, target, {
+      duration,
+      delay,
+      ease: EASE_EDITORIAL,
+      onUpdate: (latest) => {
+        setDisplayValue(Math.round(latest));
+      },
+    });
+
+    return () => controls.stop();
+  }, [delay, duration, isInView, target]);
+
+  const formatted = padZero
+    ? String(displayValue).padStart(2, "0")
+    : String(displayValue);
+
+  return (
+    <span ref={ref} className="tabular-nums">
+      {formatted}
+      {suffix}
+    </span>
+  );
+}
 
 export function AgencyHero({ templateCount }: AgencyHeroProps) {
   return (
@@ -77,22 +136,30 @@ export function AgencyHero({ templateCount }: AgencyHeroProps) {
               </a>
             </div>
 
-            {/* Subtle Social Proof Row (Shadcn Studio inspired) */}
+            {/* Subtle Social Proof Row with real human portrait avatars */}
             <div className="mt-7 flex items-center gap-3.5">
               <div className="flex -space-x-2">
                 {TRUSTED_AVATARS.map((avatar) => (
-                  <span
-                    key={avatar.initials}
-                    className={`flex h-7 w-7 items-center justify-center rounded-full border-2 border-[var(--bg-canvas)] text-[10px] font-bold ${avatar.bg}`}
-                  >
-                    {avatar.initials}
-                  </span>
+                  /* eslint-disable-next-line @next/next/no-img-element */
+                  <img
+                    key={avatar.name}
+                    src={avatar.src}
+                    alt={avatar.name}
+                    loading="eager"
+                    className="h-8 w-8 rounded-full border-2 border-[var(--bg-canvas)] object-cover"
+                  />
                 ))}
               </div>
               <p className="text-xs text-[var(--text-muted)]">
                 Được tin chọn bởi{" "}
                 <span className="font-semibold text-[var(--text-primary)]">
-                  40+ thương hiệu & đội nhóm
+                  <AnimatedCounter
+                    target={40}
+                    suffix="+"
+                    duration={1.3}
+                    delay={0.25}
+                  />{" "}
+                  thương hiệu & đội nhóm
                 </span>{" "}
                 tại Việt Nam
               </p>
@@ -102,7 +169,12 @@ export function AgencyHero({ templateCount }: AgencyHeroProps) {
           <div className="grid grid-cols-3 gap-4 border-t border-[var(--border-subtle)] pt-6 lg:col-span-6 lg:border-t-0 lg:pt-0">
             <div className="border-l border-[var(--border-subtle)] pl-4">
               <p className="font-serif text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
-                {String(templateCount).padStart(2, "0")}
+                <AnimatedCounter
+                  target={templateCount}
+                  padZero
+                  duration={1.0}
+                  delay={0.2}
+                />
               </p>
               <p className="mt-1 text-xs leading-snug text-[var(--text-muted)]">
                 Mẫu flagship sẵn sàng trải nghiệm trực tiếp
@@ -110,7 +182,12 @@ export function AgencyHero({ templateCount }: AgencyHeroProps) {
             </div>
             <div className="border-l border-[var(--border-subtle)] pl-4">
               <p className="font-serif text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
-                100%
+                <AnimatedCounter
+                  target={100}
+                  suffix="%"
+                  duration={1.5}
+                  delay={0.3}
+                />
               </p>
               <p className="mt-1 text-xs leading-snug text-[var(--text-muted)]">
                 Nội dung tiếng Việt & tương tác thực tế
@@ -118,7 +195,7 @@ export function AgencyHero({ templateCount }: AgencyHeroProps) {
             </div>
             <div className="border-l border-[var(--border-subtle)] pl-4">
               <p className="font-serif text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
-                3
+                <AnimatedCounter target={3} duration={1.1} delay={0.4} />
               </p>
               <p className="mt-1 text-xs leading-snug text-[var(--text-muted)]">
                 Khung thiết bị Desktop, Tablet & Mobile

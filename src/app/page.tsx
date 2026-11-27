@@ -5,6 +5,7 @@ import { ShowcaseMarquee } from "@/components/gallery/ShowcaseMarquee";
 import { StudioFooter } from "@/components/gallery/StudioFooter";
 import { StudioHeader } from "@/components/gallery/StudioHeader";
 import { WallOfLoveSection } from "@/components/gallery/WallOfLoveSection";
+import { siteConfig } from "@/config/site";
 import { TEMPLATE_REGISTRY } from "@/templates/registry";
 import type { TemplateMetadata } from "@/templates/types";
 
@@ -16,8 +17,33 @@ export default function HomePage() {
     }
   );
 
+  const structuredData = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "WebSite",
+        name: siteConfig.brandName,
+        url: siteConfig.siteUrl,
+        description: siteConfig.description,
+        inLanguage: "vi-VN",
+      },
+      {
+        "@type": "Organization",
+        name: siteConfig.brandName,
+        url: siteConfig.siteUrl,
+        email: siteConfig.contact.email,
+        telephone: siteConfig.contact.hotline,
+        sameAs: [siteConfig.contact.facebookUrl],
+      },
+    ],
+  };
+
   return (
     <div className="flex min-h-screen flex-col bg-[var(--bg-canvas)] text-[var(--text-primary)]">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
+      />
       <StudioHeader />
       <main className="flex-1">
         <AgencyHero templateCount={serializableTemplates.length} />

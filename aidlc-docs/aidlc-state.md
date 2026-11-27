@@ -3,9 +3,9 @@
 ## Project Metadata
 - **Project Name**: Xưởng Giao Diện (`awesome-apps-UI` / `xuong-giao-dien.pages.dev`) — Thư viện trưng bày mẫu giao diện website tương tác cho khách hàng Agency / Freelancer
 - **Project Type**: Greenfield (`Next.js 16 App Router + TypeScript + Tailwind CSS v4 + Framer Motion + Lucide Icons · Static Export`)
-- **Active Phase**: `CONSTRUCTION` (Scoped Release + `UNIT-07` UI Upgrade Complete)
-- **Active Stage**: `UNIT-07: Brand Refresh & Shadcn-Studio-Inspired Showcase Upgrades` (Completed)
-- **Last Updated**: `2026-11-27T04:13:30Z`
+- **Active Phase**: `CONSTRUCTION` (Scoped Release + `UNIT-07` & `UNIT-08` Complete)
+- **Active Stage**: `UNIT-08: Technical SEO Foundation & Branded Error Pages` (Completed)
+- **Last Updated**: `2026-11-27T06:19:30Z`
 
 ---
 
@@ -27,7 +27,8 @@
 - [ ] **`UNIT-04`**: *(Tạm hoãn)* Flagship Templates Batch 2 — Technical Docs (`vietcloud-docs`) & Dashboard Analytics (`pulse-bi-dashboard`)
 - [ ] **`UNIT-05`**: *(Tạm hoãn)* Flagship Templates Batch 3 — Portfolio Creative (`son-ha-studio`) & Dịch vụ / Hospitality (`an-nhien-resort`)
 - [x] **`UNIT-06`**: Polish, Responsive QA & Static Export Verification (Root + Subpath `NEXT_PUBLIC_BASE_PATH=/awesome-apps-UI` + 8/8 Unsplash HTTP 200)
-- [x] **`UNIT-07`**: Brand Refresh (**Xưởng Giao Diện**) & Shadcn-Studio-Inspired Showcase Upgrades (Light/Dark Mode Toggle, Dual-Row Showcase Marquee, Visual Bento Highlights + Interactive Color Customizer, Wall of Love)
+- [x] **`UNIT-07`**: Brand Refresh (**Xưởng Giao Diện**) & Shadcn-Studio-Inspired Showcase Upgrades (Light/Dark Mode Toggle, Dual-Row Showcase Marquee, Visual Bento Highlights + Interactive Color Customizer, Vertical Wall of Love & Hero Animated Counters)
+- [x] **`UNIT-08`**: Technical SEO Foundation & Branded Error Pages (`sitemap.xml`, `robots.txt`, `manifest.webmanifest`, `icon.svg`, JSON-LD, canonical URLs, `not-found.tsx`, `error.tsx`, `global-error.tsx`, `/500/`)
 - [x] **Full Build & Verification**: `npm run typecheck && npm run lint && npm run build`
 
 ---

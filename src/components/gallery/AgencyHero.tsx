@@ -9,18 +9,25 @@ interface AgencyHeroProps {
 
 const EASE_EDITORIAL: [number, number, number, number] = [0.22, 1, 0.36, 1];
 
+const TRUSTED_AVATARS = [
+  { initials: "MH", bg: "bg-stone-800 text-white" },
+  { initials: "TL", bg: "bg-emerald-700 text-white" },
+  { initials: "QK", bg: "bg-amber-700 text-white" },
+  { initials: "PN", bg: "bg-zinc-700 text-white" },
+];
+
 export function AgencyHero({ templateCount }: AgencyHeroProps) {
   return (
     <section className="relative overflow-hidden border-b border-[var(--border-subtle)]">
-      <div className="mx-auto max-w-[1360px] px-5 pt-10 pb-16 sm:px-8 sm:pt-14 sm:pb-24">
+      <div className="mx-auto max-w-[1360px] px-5 pt-10 pb-14 sm:px-8 sm:pt-14 sm:pb-20">
         {/* Editorial metadata hairline */}
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.55, ease: EASE_EDITORIAL }}
-          className="mb-10 flex flex-wrap items-center justify-between gap-3 border-b border-[var(--border-subtle)] pb-4 text-[11px] font-semibold tracking-[0.14em] text-[var(--text-muted)] uppercase"
+          className="mb-9 flex flex-wrap items-center justify-between gap-3 border-b border-[var(--border-subtle)] pb-4 text-[11px] font-semibold tracking-[0.14em] text-[var(--text-muted)] uppercase"
         >
-          <span>Thư viện giao diện tuyển chọn · Phiên bản 2026</span>
+          <span>Xưởng Giao Diện · Thư viện tuyển chọn 2026</span>
           <span>Thiết kế tương tác · Xem trực tiếp đa thiết bị</span>
         </motion.div>
 
@@ -43,7 +50,7 @@ export function AgencyHero({ templateCount }: AgencyHeroProps) {
           initial={{ opacity: 0, y: 18 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.18, ease: EASE_EDITORIAL }}
-          className="mt-10 grid gap-10 lg:mt-14 lg:grid-cols-12 lg:items-end"
+          className="mt-10 grid gap-10 lg:mt-12 lg:grid-cols-12 lg:items-end"
         >
           <div className="lg:col-span-6">
             <p className="max-w-xl text-base leading-relaxed text-[var(--text-secondary)] sm:text-lg">
@@ -55,7 +62,7 @@ export function AgencyHero({ templateCount }: AgencyHeroProps) {
               <a
                 id="hero-explore-btn"
                 href="#bo-suu-tap"
-                className="inline-flex items-center gap-2 rounded-full bg-[var(--accent-primary)] px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-stone-800"
+                className="inline-flex items-center gap-2 rounded-full bg-[var(--accent-primary)] px-6 py-3 text-sm font-semibold text-[var(--accent-primary-fg)] transition-opacity hover:opacity-90"
               >
                 <span>Khám phá bộ sưu tập</span>
                 <ArrowDownRight className="h-4 w-4" />
@@ -63,11 +70,32 @@ export function AgencyHero({ templateCount }: AgencyHeroProps) {
               <a
                 id="hero-contact-btn"
                 href="#lien-he"
-                className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-5 py-3 text-sm font-semibold text-[var(--text-primary)] transition-colors hover:border-stone-400"
+                className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] px-5 py-3 text-sm font-semibold text-[var(--text-primary)] transition-colors hover:border-[var(--text-muted)]"
               >
                 <span>Trao đổi ý tưởng</span>
                 <ArrowUpRight className="h-4 w-4" />
               </a>
+            </div>
+
+            {/* Subtle Social Proof Row (Shadcn Studio inspired) */}
+            <div className="mt-7 flex items-center gap-3.5">
+              <div className="flex -space-x-2">
+                {TRUSTED_AVATARS.map((avatar) => (
+                  <span
+                    key={avatar.initials}
+                    className={`flex h-7 w-7 items-center justify-center rounded-full border-2 border-[var(--bg-canvas)] text-[10px] font-bold ${avatar.bg}`}
+                  >
+                    {avatar.initials}
+                  </span>
+                ))}
+              </div>
+              <p className="text-xs text-[var(--text-muted)]">
+                Được tin chọn bởi{" "}
+                <span className="font-semibold text-[var(--text-primary)]">
+                  40+ thương hiệu & đội nhóm
+                </span>{" "}
+                tại Việt Nam
+              </p>
             </div>
           </div>
 

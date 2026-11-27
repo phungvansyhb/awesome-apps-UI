@@ -1,11 +1,11 @@
 # AI-DLC Workflow State Tracker (`aidlc-state.md`)
 
 ## Project Metadata
-- **Project Name**: Awesome UI Studio (`awesome-apps-UI`) — Thư viện trưng bày mẫu giao diện website tương tác cho khách hàng Agency / Freelancer
+- **Project Name**: Xưởng Giao Diện (`awesome-apps-UI` / `xuong-giao-dien.pages.dev`) — Thư viện trưng bày mẫu giao diện website tương tác cho khách hàng Agency / Freelancer
 - **Project Type**: Greenfield (`Next.js 16 App Router + TypeScript + Tailwind CSS v4 + Framer Motion + Lucide Icons · Static Export`)
-- **Active Phase**: `CONSTRUCTION` (Scoped Release Complete — sẵn sàng chuyển `OPERATIONS` hoặc mở tiếp `UNIT-04` / `UNIT-05`)
-- **Active Stage**: `UNIT-06: Polish, Responsive QA & Static Export Verification` (Completed)
-- **Last Updated**: `2026-11-27T03:17:00Z`
+- **Active Phase**: `CONSTRUCTION` (Scoped Release + `UNIT-07` UI Upgrade Complete)
+- **Active Stage**: `UNIT-07: Brand Refresh & Shadcn-Studio-Inspired Showcase Upgrades` (Completed)
+- **Last Updated**: `2026-11-27T04:13:30Z`
 
 ---
 
@@ -27,6 +27,7 @@
 - [ ] **`UNIT-04`**: *(Tạm hoãn)* Flagship Templates Batch 2 — Technical Docs (`vietcloud-docs`) & Dashboard Analytics (`pulse-bi-dashboard`)
 - [ ] **`UNIT-05`**: *(Tạm hoãn)* Flagship Templates Batch 3 — Portfolio Creative (`son-ha-studio`) & Dịch vụ / Hospitality (`an-nhien-resort`)
 - [x] **`UNIT-06`**: Polish, Responsive QA & Static Export Verification (Root + Subpath `NEXT_PUBLIC_BASE_PATH=/awesome-apps-UI` + 8/8 Unsplash HTTP 200)
+- [x] **`UNIT-07`**: Brand Refresh (**Xưởng Giao Diện**) & Shadcn-Studio-Inspired Showcase Upgrades (Light/Dark Mode Toggle, Dual-Row Showcase Marquee, Visual Bento Highlights + Interactive Color Customizer, Wall of Love)
 - [x] **Full Build & Verification**: `npm run typecheck && npm run lint && npm run build`
 
 ---

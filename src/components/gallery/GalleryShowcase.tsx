@@ -102,15 +102,15 @@ export function GalleryShowcase({ templates }: GalleryShowcaseProps) {
           onClick={() => setActiveCategory("all")}
           className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold transition-all ${
             activeCategory === "all"
-              ? "bg-[var(--accent-primary)] text-white"
-              : "border border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-secondary)] hover:border-stone-400 hover:text-[var(--text-primary)]"
+              ? "bg-[var(--accent-primary)] text-[var(--accent-primary-fg)]"
+              : "border border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-secondary)] hover:border-[var(--text-muted)] hover:text-[var(--text-primary)]"
           }`}
         >
           <span>Tất cả</span>
           <span
             className={`rounded-full px-1.5 py-0.5 text-[10px] ${
               activeCategory === "all"
-                ? "bg-white/15 text-white"
+                ? "bg-[var(--accent-primary-fg)]/15 text-[var(--accent-primary-fg)]"
                 : "bg-[var(--bg-subtle)] text-[var(--text-muted)]"
             }`}
           >
@@ -132,15 +132,15 @@ export function GalleryShowcase({ templates }: GalleryShowcaseProps) {
               onClick={() => setActiveCategory(category.id)}
               className={`inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-semibold transition-all ${
                 isActive
-                  ? "bg-[var(--accent-primary)] text-white"
-                  : "border border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-secondary)] hover:border-stone-400 hover:text-[var(--text-primary)]"
+                  ? "bg-[var(--accent-primary)] text-[var(--accent-primary-fg)]"
+                  : "border border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-secondary)] hover:border-[var(--text-muted)] hover:text-[var(--text-primary)]"
               }`}
             >
               <span>{category.shortLabel}</span>
               <span
                 className={`rounded-full px-1.5 py-0.5 text-[10px] ${
                   isActive
-                    ? "bg-white/15 text-white"
+                    ? "bg-[var(--accent-primary-fg)]/15 text-[var(--accent-primary-fg)]"
                     : "bg-[var(--bg-subtle)] text-[var(--text-muted)]"
                 }`}
               >
@@ -187,13 +187,13 @@ export function GalleryShowcase({ templates }: GalleryShowcaseProps) {
                 setActiveCategory("all");
                 setSearchQuery("");
               }}
-              className="rounded-full bg-[var(--accent-primary)] px-5 py-2.5 text-xs font-semibold text-white transition-colors hover:bg-stone-800"
+              className="rounded-full bg-[var(--accent-primary)] px-5 py-2.5 text-xs font-semibold text-[var(--accent-primary-fg)] transition-opacity hover:opacity-90"
             >
               Xem tất cả mẫu hiện có
             </button>
             <a
               href="#lien-he"
-              className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-canvas)] px-5 py-2.5 text-xs font-semibold text-[var(--text-primary)] transition-colors hover:border-stone-400"
+              className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-canvas)] px-5 py-2.5 text-xs font-semibold text-[var(--text-primary)] transition-colors hover:border-[var(--text-muted)]"
             >
               <span>Đặt thiết kế riêng</span>
               <ArrowUpRight className="h-3.5 w-3.5" />

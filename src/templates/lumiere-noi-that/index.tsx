@@ -453,7 +453,7 @@ export function LumiereNoiThatTemplate() {
             </p>
           </div>
           <p className="text-[#8E8173]">
-            Bản demo tương tác thuộc bộ sưu tập Awesome UI Studio
+            Bản demo tương tác thuộc bộ sưu tập Xưởng Giao Diện
           </p>
         </div>
       </footer>

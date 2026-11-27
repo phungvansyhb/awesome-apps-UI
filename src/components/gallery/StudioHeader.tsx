@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight, Menu, Phone, X } from "lucide-react";
 import { siteConfig } from "@/config/site";
+import { ThemeToggle } from "./ThemeToggle";
 
 export function StudioHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -25,7 +26,7 @@ export function StudioHeader() {
         {/* Desktop navigation */}
         <nav
           aria-label="Điều hướng chính"
-          className="hidden items-center gap-8 md:flex"
+          className="hidden items-center gap-7 md:flex"
         >
           {siteConfig.navigation.map((item) => (
             <a
@@ -39,38 +40,42 @@ export function StudioHeader() {
         </nav>
 
         {/* Right actions */}
-        <div className="hidden items-center gap-4 md:flex">
+        <div className="hidden items-center gap-3 md:flex">
           <a
             href={siteConfig.contact.hotlineHref}
-            className="inline-flex items-center gap-1.5 text-xs font-medium text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)]"
+            className="hidden items-center gap-1.5 text-xs font-medium text-[var(--text-secondary)] transition-colors hover:text-[var(--text-primary)] lg:inline-flex"
           >
             <Phone className="h-3.5 w-3.5" />
             <span>{siteConfig.contact.hotline}</span>
           </a>
+          <ThemeToggle />
           <a
             id="header-contact-cta"
             href="#lien-he"
-            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--accent-primary)] px-4 py-2 text-xs font-semibold text-white transition-all hover:bg-stone-800"
+            className="inline-flex items-center gap-1.5 rounded-full bg-[var(--accent-primary)] px-4 py-2 text-xs font-semibold text-[var(--accent-primary-fg)] transition-opacity hover:opacity-90"
           >
             <span>Liên hệ Studio</span>
             <ArrowUpRight className="h-3.5 w-3.5" />
           </a>
         </div>
 
-        {/* Mobile menu button */}
-        <button
-          id="mobile-menu-toggle"
-          type="button"
-          aria-label={mobileOpen ? "Đóng menu" : "Mở menu"}
-          onClick={() => setMobileOpen((prev) => !prev)}
-          className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-primary)] md:hidden"
-        >
-          {mobileOpen ? (
-            <X className="h-4 w-4" />
-          ) : (
-            <Menu className="h-4 w-4" />
-          )}
-        </button>
+        {/* Mobile controls */}
+        <div className="flex items-center gap-2 md:hidden">
+          <ThemeToggle />
+          <button
+            id="mobile-menu-toggle"
+            type="button"
+            aria-label={mobileOpen ? "Đóng menu" : "Mở menu"}
+            onClick={() => setMobileOpen((prev) => !prev)}
+            className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border-subtle)] bg-[var(--bg-surface)] text-[var(--text-primary)]"
+          >
+            {mobileOpen ? (
+              <X className="h-4 w-4" />
+            ) : (
+              <Menu className="h-4 w-4" />
+            )}
+          </button>
+        </div>
       </div>
 
       {/* Mobile navigation drawer */}
@@ -99,7 +104,7 @@ export function StudioHeader() {
             <a
               href="#lien-he"
               onClick={() => setMobileOpen(false)}
-              className="inline-flex items-center justify-center gap-1.5 rounded-full bg-[var(--accent-primary)] px-4 py-2.5 text-sm font-semibold text-white"
+              className="inline-flex items-center justify-center gap-1.5 rounded-full bg-[var(--accent-primary)] px-4 py-2.5 text-sm font-semibold text-[var(--accent-primary-fg)]"
             >
               <span>Liên hệ tư vấn</span>
               <ArrowUpRight className="h-4 w-4" />

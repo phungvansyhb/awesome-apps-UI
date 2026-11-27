@@ -38,7 +38,7 @@ export function TemplateCard({ template, index }: TemplateCardProps) {
       <Link
         id={`template-card-${template.slug}`}
         href={`/templates/${template.slug}/`}
-        className="flex h-full flex-col overflow-hidden rounded-[22px] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-3.5 transition-all duration-300 hover:-translate-y-1 hover:border-stone-400/80 hover:shadow-[0_24px_60px_rgba(17,17,17,0.08)] sm:p-4"
+        className="flex h-full flex-col overflow-hidden rounded-[22px] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-3.5 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--text-muted)] hover:shadow-[0_24px_60px_rgba(0,0,0,0.12)] sm:p-4"
       >
         {/* Live scaled preview stage */}
         <div className="relative aspect-[16/10] w-full overflow-hidden">

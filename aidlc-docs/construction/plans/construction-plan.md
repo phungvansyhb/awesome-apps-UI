@@ -92,3 +92,17 @@
   - Kiểm chứng đầy đủ file xuất tĩnh trong `out/` cho trang chủ + 2 `/templates/*` + 2 `/preview/*` và kiểm chứng 8/8 ảnh Unsplash trả mã `200 OK`.
   - Kiểm chứng build subpath với `NEXT_PUBLIC_BASE_PATH=/awesome-apps-UI`.
 - **Verification Gate**: `npm run typecheck && npm run lint && npm run build` ✅
+
+---
+
+### [x] `UNIT-07`: Brand Refresh ("Xưởng Giao Diện") & Shadcn-Studio-Inspired Showcase Upgrades
+- **Files**:
+  - `src/config/site.ts` (đổi thương hiệu sang **Xưởng Giao Diện**, email `hello@xuonggiaodien.vn`)
+  - `src/app/globals.css` & `src/app/layout.tsx` (hệ token Dark Mode obsidian trung tính, script chống nháy theme, animation marquee)
+  - `src/components/gallery/ThemeToggle.tsx`
+  - `src/components/gallery/ShowcaseMarquee.tsx` (băng chuyền 2 tầng trưng bày khối UI tương tác, pause on hover)
+  - `src/components/gallery/BentoHighlightsSection.tsx` (lưới Bento 4 ô gồm mini Theme Customizer tương tác, đa thiết bị, SEO Zalo & kiến trúc mô-đun)
+  - `src/components/gallery/WallOfLoveSection.tsx` (khối đánh giá khách hàng 6 thẻ)
+  - `src/components/gallery/StudioHeader.tsx`, `AgencyHero.tsx`, `GalleryShowcase.tsx`, `TemplateCard.tsx`, `src/app/page.tsx`
+  - `src/templates/lumiere-noi-that/index.tsx`, `src/templates/kova-ai-saas/index.tsx`
+- **Verification Gate**: `npm run typecheck && npm run lint && npm run build` ✅

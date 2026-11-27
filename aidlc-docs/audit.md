@@ -85,3 +85,61 @@
 - **Artifacts & Files Updated**:
   - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận lịch sử commit & push bản phát hành MVP đầu tiên (2 mẫu flagship).
 - **Verification & Gate Status**: Đã qua đầy đủ `npm run typecheck && npm run lint && npm run build` (root + subpath); tiến hành `git add`, `git commit`, `git push`.
+
+---
+
+## [2026-11-27T03:38:24Z] — Prompt 7: Brainstorm Vietnamese Brand Names for the Showcase Website
+- **Phase / Stage**: `OPERATIONS / Branding & Copy Consultation`
+- **User Input**: `"nghĩ cho tôi một cái tên tiếng việt cho web"`
+- **Clarifications / Decisions**: Đề xuất danh sách tên thương hiệu tiếng Việt phân theo 3 sắc thái (Creative Studio/Editorial, Tối giản/Sang trọng, Trực diện/Tương tác) kèm Top 3 gợi ý phù hợp nhất với phong cách hiện tại; chờ người dùng chọn để cập nhật vào `src/config/site.ts`.
+- **Artifacts & Files Updated**:
+  - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận phiên gợi ý đặt tên thương hiệu tiếng Việt.
+- **Verification & Gate Status**: Không thay đổi mã nguồn ứng dụng; chờ người dùng chọn tên để áp dụng nếu muốn.
+
+---
+
+## [2026-11-27T03:41:06Z] — Prompt 8: Cloudflare Pages Deployment & Environment Configuration Guidance
+- **Phase / Stage**: `OPERATIONS / Stage 3.2: Deployment Setup (Cloudflare Pages)`
+- **User Input**: `"ok tôi sẽ đặt tên trên cloudfare là xuong-giao-dien.pages.dev , tôi cso cần setup env gì ko"`
+- **Clarifications / Decisions**:
+  - Người dùng chốt tên miền Cloudflare Pages: `xuong-giao-dien.pages.dev` (root domain).
+  - Hướng dẫn cấu hình Cloudflare Pages: không cần đặt `NEXT_PUBLIC_BASE_PATH` (mặc định rỗng cho root domain), khuyến nghị đặt `NODE_VERSION=22` để tương thích Next.js 16, Build command `npm run build`, Output directory `out`.
+- **Artifacts & Files Updated**:
+  - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận hướng dẫn cấu hình môi trường Cloudflare Pages.
+- **Verification & Gate Status**: Không thay đổi mã nguồn ứng dụng; chờ xác nhận nếu người dùng muốn đổi tên thương hiệu trong code sang **Xưởng Giao Diện**.
+
+---
+
+## [2026-11-27T04:08:12Z] — Prompt 9: Design Analysis of Reference Site (`shadcnstudio.com`)
+- **Phase / Stage**: `OPERATIONS / Design Benchmarking & Inspiration`
+- **User Input**: `"[Shadcn Studio - Shadcn UI Components, Blocks & Templates](https://shadcnstudio.com/) phong cách thiết kế ở trang web này là như thế nào , có những điểm gì nổi bật"`
+- **Clarifications / Decisions**: Truy cập và phân tích trực tiếp trang `https://shadcnstudio.com/` về phong cách thiết kế (Modern Modular SaaS / DevTool Minimalism), các điểm nổi bật về UX/trưng bày và rút ra gợi ý chọn lọc phù hợp cho `xuong-giao-dien.pages.dev`.
+- **Artifacts & Files Updated**:
+  - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận phân tích trang tham khảo `shadcnstudio.com`.
+- **Verification & Gate Status**: Không sửa mã nguồn ứng dụng; chỉ cung cấp phân tích thiết kế.
+
+---
+
+## [2026-11-27T04:14:00Z] — Prompt 10: Execute `UNIT-07` — Brand Refresh ("Xưởng Giao Diện") & Shadcn-Studio-Inspired Showcase Upgrades
+- **Phase / Stage**: `CONSTRUCTION / UNIT-07: Brand Refresh & Showcase UX Enhancements`
+- **User Input**: `"áp dụng vào trang của tôi"`
+- **Clarifications / Decisions**:
+  - Đổi tên thương hiệu toàn trang sang **Xưởng Giao Diện** (đồng bộ với `xuong-giao-dien.pages.dev`).
+  - Áp dụng có chọn lọc các điểm nổi bật từ `shadcnstudio.com`: (1) Chế độ **Sáng / Tối** (Light/Dark Mode Toggle kèm script chống nháy theme), (2) **Băng chuyền trưng bày 2 tầng** (Dual-Row Showcase Marquee, rê chuột tạm dừng, bấm vào xem Live Demo), (3) **Lưới Bento kể chuyện tính năng** có bộ đổi màu thương hiệu tương tác trực tiếp, (4) **Khối Cảm nhận khách hàng (Wall of Love)** & cụm Social Proof ngay Hero.
+- **Artifacts & Files Updated**:
+  - `src/config/site.ts`, `src/app/globals.css`, `src/app/layout.tsx`, `src/app/page.tsx`.
+  - `src/components/gallery/ThemeToggle.tsx`, `ShowcaseMarquee.tsx`, `BentoHighlightsSection.tsx`, `WallOfLoveSection.tsx`.
+  - `src/components/gallery/StudioHeader.tsx`, `AgencyHero.tsx`, `GalleryShowcase.tsx`, `TemplateCard.tsx`.
+  - `src/templates/lumiere-noi-that/index.tsx`, `src/templates/kova-ai-saas/index.tsx`.
+  - [`aidlc-docs/aidlc-state.md`](aidlc-state.md), [`aidlc-docs/construction/plans/construction-plan.md`](construction/plans/construction-plan.md), [`aidlc-docs/audit.md`](audit.md).
+- **Verification & Gate Status**: `npm run typecheck && npm run lint && npm run build` PASS (0 lỗi, 7/7 trang xuất tĩnh với thương hiệu **Xưởng Giao Diện**).
+
+---
+
+## [2026-11-27T04:16:57Z] — Prompt 11: Commit & Push `UNIT-07` ("Xưởng Giao Diện" Brand Refresh & Showcase Upgrades)
+- **Phase / Stage**: `CONSTRUCTION → OPERATIONS / Version Control Checkpoint`
+- **User Input**: `"commit và push"`
+- **Clarifications / Decisions**: Commit toàn bộ mã nguồn `UNIT-07` và đẩy lên nhánh `main` của `origin` để kích hoạt Cloudflare Pages auto-deploy cho `xuong-giao-dien.pages.dev`.
+- **Artifacts & Files Updated**:
+  - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận lịch sử commit & push cho `UNIT-07`.
+- **Verification & Gate Status**: Đã qua `npm run typecheck && npm run lint && npm run build`; tiến hành `git add`, `git commit`, `git push`.

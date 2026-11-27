@@ -444,7 +444,7 @@ export function KovaAiSaasTemplate() {
           <p className="font-semibold text-stone-300">
             KOVA AI Workspace · Giải pháp tự động hóa doanh nghiệp
           </p>
-          <p>Bản demo tương tác thuộc bộ sưu tập Awesome UI Studio</p>
+          <p>Bản demo tương tác thuộc bộ sưu tập Xưởng Giao Diện</p>
         </div>
       </footer>
     </div>

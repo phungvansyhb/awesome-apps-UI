@@ -21,8 +21,8 @@ export interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
-  brandName: "Awesome UI Studio",
-  tagline: "Bộ sưu tập mẫu giao diện website tương tác đẳng cấp",
+  brandName: "Xưởng Giao Diện",
+  tagline: "Tuyển tập mẫu website tương tác cho thương hiệu dẫn đầu",
   description:
     "Khám phá thư viện mẫu giao diện website được thiết kế chỉn chu theo từng ngành hàng: Bán lẻ, Landing Page SaaS, Tài liệu Kỹ thuật, Dashboard quản trị, Portfolio sáng tạo và Dịch vụ nghỉ dưỡng.",
   locale: "vi_VN",
@@ -30,14 +30,15 @@ export const siteConfig: SiteConfig = {
     hotline: "0901 234 567",
     hotlineHref: "tel:+84901234567",
     zaloUrl: "https://zalo.me/0901234567",
-    email: "hello@awesomeuistudio.vn",
-    facebookUrl: "https://facebook.com/awesomeuistudio",
+    email: "hello@xuonggiaodien.vn",
+    facebookUrl: "https://facebook.com/xuonggiaodien",
     address: "Tầng 8, Tòa nhà Sáng Tạo, Quận 1, TP. Hồ Chí Minh",
     workingHours: "Thứ 2 – Thứ 7 · 08:30 – 18:00",
   },
   navigation: [
     { label: "Bộ sưu tập", href: "#bo-suu-tap" },
-    { label: "Quy trình", href: "#quy-trinh" },
+    { label: "Điểm nổi bật", href: "#diem-noi-bat" },
+    { label: "Đánh giá", href: "#danh-gia" },
     { label: "Liên hệ", href: "#lien-he" },
   ],
 };

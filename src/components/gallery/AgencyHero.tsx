@@ -87,8 +87,6 @@ function RotatingHeroKeyword() {
   const prefersReducedMotion = useReducedMotion();
   const [activeIndex, setActiveIndex] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
-  const [measuredWidth, setMeasuredWidth] = useState<number | null>(null);
-  const measureRef = useRef<HTMLSpanElement | null>(null);
 
   const activeWord = HERO_KEYWORDS[activeIndex];
 
@@ -104,45 +102,9 @@ function RotatingHeroKeyword() {
     return () => window.clearInterval(intervalId);
   }, [isPaused]);
 
-  useEffect(() => {
-    const node = measureRef.current;
-    if (!node) return;
-
-    const updateWidth = () => {
-      const nextWidth = Math.ceil(node.getBoundingClientRect().width);
-      if (nextWidth > 0) {
-        setMeasuredWidth((prev) => (prev === nextWidth ? prev : nextWidth));
-      }
-    };
-
-    const observer = new ResizeObserver(updateWidth);
-    observer.observe(node);
-
-    const rafId = window.requestAnimationFrame(updateWidth);
-    let active = true;
-    document.fonts?.ready.then(() => {
-      if (active) updateWidth();
-    });
-
-    return () => {
-      active = false;
-      window.cancelAnimationFrame(rafId);
-      observer.disconnect();
-    };
-  }, [activeWord]);
-
   return (
     <>
       <span className="sr-only">{HERO_KEYWORDS.join(", ")}</span>
-
-      {/* Hidden measurer inside H1 typography context for exact active-word underline width */}
-      <span
-        ref={measureRef}
-        aria-hidden="true"
-        className="pointer-events-none invisible absolute top-0 left-0 font-serif font-medium italic whitespace-nowrap select-none"
-      >
-        {activeWord}
-      </span>
 
       <span
         aria-hidden="true"
@@ -185,46 +147,6 @@ function RotatingHeroKeyword() {
             </motion.span>
           </AnimatePresence>
         </span>
-
-        {/* Editorial animated underline sized accurately to each active word */}
-        <motion.span
-          initial={false}
-          animate={
-            measuredWidth !== null ? { width: measuredWidth } : undefined
-          }
-          transition={{
-            type: "spring",
-            stiffness: 140,
-            damping: 26,
-            mass: 0.9,
-          }}
-          className="pointer-events-none absolute bottom-[0.01em] left-[0.04em] h-[2px] max-w-full overflow-hidden rounded-full sm:h-[2.5px]"
-          style={measuredWidth === null ? { right: "0.1em" } : undefined}
-        >
-          <AnimatePresence mode="sync" initial={false}>
-            <motion.span
-              key={`underline-${activeWord}`}
-              initial={{ scaleX: 0, opacity: 0.25, originX: 0 }}
-              animate={{ scaleX: 1, opacity: 1, originX: 0 }}
-              exit={{
-                scaleX: 0,
-                opacity: 0,
-                originX: 1,
-                transition: {
-                  originX: { duration: 0 },
-                  duration: 0.65,
-                  ease: EASE_EDITORIAL,
-                },
-              }}
-              transition={{
-                duration: 1.05,
-                delay: 0.14,
-                ease: EASE_EDITORIAL,
-              }}
-              className="absolute inset-0 block rounded-full bg-[#F97316]/85"
-            />
-          </AnimatePresence>
-        </motion.span>
       </span>
     </>
   );

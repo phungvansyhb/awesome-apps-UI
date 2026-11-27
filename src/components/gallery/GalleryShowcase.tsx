@@ -15,13 +15,56 @@ import { TEMPLATE_CATEGORIES } from "@/templates/registry";
 import type { TemplateCategoryId, TemplateMetadata } from "@/templates/types";
 import { TemplateCard } from "./TemplateCard";
 
-function getBentoColSpan(index: number): string {
-  const row = Math.floor(index / 2);
-  const isLeft = index % 2 === 0;
-  if (row % 2 === 0) {
-    return isLeft ? "lg:col-span-7" : "lg:col-span-5";
+interface TrueBentoSlot {
+  colSpanClass: string;
+  viewport: "desktop" | "mobile";
+}
+
+/**
+ * Computes True Bento layout slots in 5-item repeating groups:
+ * - [0] 7-col Desktop (Row 1 Left)
+ * - [1] 5-col × 2-row TALL Mobile Preview (Rows 1–2 Right, when group has >= 3 items)
+ * - [2] 7-col Desktop (Row 2 Left)
+ * - [3] 5-col Desktop (Row 3 Left)
+ * - [4] 7-col Desktop (Row 3 Right)
+ */
+function getTrueBentoSlot(index: number, total: number): TrueBentoSlot {
+  const groupStart = Math.floor(index / 5) * 5;
+  const groupSize = Math.min(5, total - groupStart);
+  const pos = index % 5;
+
+  if (groupSize >= 3) {
+    if (pos === 0) {
+      return { colSpanClass: "lg:col-span-7", viewport: "desktop" };
+    }
+    if (pos === 1) {
+      return {
+        colSpanClass: "lg:col-span-5 lg:row-span-2",
+        viewport: "mobile",
+      };
+    }
+    if (pos === 2) {
+      return { colSpanClass: "lg:col-span-7", viewport: "desktop" };
+    }
+    if (pos === 3) {
+      return { colSpanClass: "lg:col-span-5", viewport: "desktop" };
+    }
+    return { colSpanClass: "lg:col-span-7", viewport: "desktop" };
   }
-  return isLeft ? "lg:col-span-5" : "lg:col-span-7";
+
+  // Remaining 1 or 2 cards in the final partial group
+  if (pos === 0) {
+    return { colSpanClass: "lg:col-span-7", viewport: "desktop" };
+  }
+  return { colSpanClass: "lg:col-span-5", viewport: "desktop" };
+}
+
+function getFillerCtaSpan(total: number): string | null {
+  if (total === 0) return null;
+  const rem = total % 5;
+  if (rem === 1) return "lg:col-span-5";
+  if (rem === 4) return "lg:col-span-7";
+  return null;
 }
 
 interface GalleryShowcaseProps {
@@ -64,6 +107,8 @@ export function GalleryShowcase({ templates }: GalleryShowcaseProps) {
       return haystack.includes(normalizedQuery);
     });
   }, [activeCategory, searchQuery, templates]);
+
+  const fillerCtaSpan = getFillerCtaSpan(filteredTemplates.length);
 
   return (
     <section
@@ -168,36 +213,39 @@ export function GalleryShowcase({ templates }: GalleryShowcaseProps) {
         })}
       </div>
 
-      {/* Balanced Alternating Bento Grid (7+5 → 5+7) */}
+      {/* True Bento Grid with Tall Mobile Preview (row-span-2) */}
       <motion.div
         layout
-        className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-12"
+        className="mt-10 grid grid-cols-1 gap-6 lg:grid-flow-dense lg:grid-cols-12"
       >
         <AnimatePresence mode="popLayout">
-          {filteredTemplates.map((template, index) => (
-            <TemplateCard
-              key={template.slug}
-              template={template}
-              index={index}
-              colSpanClass={getBentoColSpan(index)}
-            />
-          ))}
+          {filteredTemplates.map((template, index) => {
+            const slot = getTrueBentoSlot(index, filteredTemplates.length);
+            return (
+              <TemplateCard
+                key={template.slug}
+                template={template}
+                index={index}
+                colSpanClass={slot.colSpanClass}
+                viewport={slot.viewport}
+              />
+            );
+          })}
 
-          {/* Auto-completes any odd Bento row to a clean 12/12 grid */}
-          {filteredTemplates.length > 0 &&
-            filteredTemplates.length % 2 === 1 && (
-              <motion.aside
-                key="bento-custom-studio-cta"
-                layout
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, scale: 0.98 }}
-                transition={{
-                  duration: 0.45,
-                  ease: [0.22, 1, 0.36, 1],
-                }}
-                className={`flex flex-col ${getBentoColSpan(filteredTemplates.length)}`}
-              >
+          {/* Auto-completes partial filtered rows (1 or 4 items) to a clean 12/12 grid */}
+          {fillerCtaSpan && (
+            <motion.aside
+              key="bento-custom-studio-cta"
+              layout
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.98 }}
+              transition={{
+                duration: 0.45,
+                ease: [0.22, 1, 0.36, 1],
+              }}
+              className={`flex flex-col ${fillerCtaSpan}`}
+            >
                 <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[22px] border border-dashed border-[var(--border-subtle)] bg-[var(--bg-surface)] p-6 transition-all duration-300 hover:border-[var(--text-muted)] hover:shadow-[0_24px_60px_rgba(0,0,0,0.08)] sm:p-8">
                   <div
                     aria-hidden="true"

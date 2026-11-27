@@ -521,3 +521,43 @@
 - **Artifacts & Files Updated**:
   - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận lịch sử commit & push.
 - **Verification & Gate Status**: Đã qua `npm run typecheck && npm run lint && npm run build` (0 lỗi, 18/18 trang tĩnh); tiến hành `git add`, `git commit`, `git push`.
+
+---
+
+## [2026-11-27T09:43:30Z] — Prompt 41: Upgrade Gallery to True Bento Grid with Tall 2-Row Mobile Live Preview (`390px` Smartphone Bezel)
+- **Phase / Stage**: `CONSTRUCTION / UX Upgrade (GalleryShowcase True Bento + Mobile Bezel Preview)`
+- **User Input**: `"áp dụng layout True Bento Kết Hợp Thẻ Dọc Mobile Preview cho phần gallery"`
+- **Clarifications / Decisions**:
+  - Bổ sung chế độ `viewport="mobile"` (`390×960` Live Iframe trong khung điện thoại bo cong sang trọng có Dynamic Island, thanh trạng thái & nhãn `Mobile 390px`) vào `ScaledPreviewFrame.tsx`.
+  - Áp dụng bố cục **True Bento 12 cột (`lg:grid-flow-dense`)** theo cụm 5 thẻ khít 100% không lỗ trống:
+    - **Hàng 1 & 2**: `LUMIÈRE Nội Thất` (`7 cột`, Desktop) và `KHÔI NGUYÊN Portfolio` (`7 cột`, Desktop) xếp chồng bên trái, đối xứng cùng thẻ dọc **`KOVA AI Workspace` (`5 cột × 2 hàng`, Mobile 390px Live Preview)** cao 2 hàng bên phải.
+    - **Hàng 3**: `MỘC BISTRO` (`5 cột`, Desktop) + `AXIOM Lớp Học` (`7 cột`, Desktop) khép kín hàng 12/12.
+    - Khi lọc danh mục ra số lượng lẻ 1 hoặc 4 mẫu, thẻ Studio CTA tự động xuất hiện lấp kín đúng phần cột còn lại.
+- **Artifacts & Files Updated**:
+  - `src/components/gallery/ScaledPreviewFrame.tsx` — Thêm chế độ `viewport="mobile"` với khung smartphone `390px` Live Preview.
+  - `src/components/gallery/TemplateCard.tsx` — Hỗ trợ thẻ dọc `viewport="mobile"` tự giãn kín chiều cao `row-span-2`.
+  - `src/components/gallery/GalleryShowcase.tsx` — Triển khai `getTrueBentoSlot` & `getFillerCtaSpan` với `lg:grid-flow-dense`.
+  - [`aidlc-docs/aidlc-state.md`](aidlc-state.md), [`aidlc-docs/audit.md`](audit.md) — Cập nhật trạng thái và nhật ký kiểm toán.
+- **Verification & Gate Status**: `npm run typecheck && npm run lint && npm run build` PASS (0 lỗi, xuất tĩnh 18/18 trang).
+
+---
+
+## [2026-11-27T09:46:00Z] — Prompt 42: Remove Underline from Rotating Hero Highlight Keyword
+- **Phase / Stage**: `CONSTRUCTION / UX Polish (AgencyHero)`
+- **User Input**: `"bỏ gạch chân ở highlight text trong hero section"`
+- **Clarifications / Decisions**:
+  - Gỡ bỏ đường gạch chân động dưới cụm từ khóa xoay vòng `sống động` → `tinh tế` → `đẳng cấp` trong `RotatingHeroKeyword`, đồng thời dọn bỏ hook `ResizeObserver` / `measureRef` không còn cần thiết để component gọn nhẹ tối đa.
+- **Artifacts & Files Updated**:
+  - `src/components/gallery/AgencyHero.tsx` — Bỏ nét gạch chân dưới chữ highlight ở Hero.
+  - [`aidlc-docs/aidlc-state.md`](aidlc-state.md), [`aidlc-docs/audit.md`](audit.md) — Cập nhật trạng thái và nhật ký kiểm toán.
+- **Verification & Gate Status**: `npm run typecheck && npm run lint && npm run build` PASS (0 lỗi, xuất tĩnh 18/18 trang).
+
+---
+
+## [2026-11-27T09:47:05Z] — Prompt 43: Commit & Push True Bento Tall Mobile Preview Gallery & Hero Underline Removal
+- **Phase / Stage**: `OPERATIONS / Release Deployment`
+- **User Input**: `"commit và push"`
+- **Clarifications / Decisions**: Commit toàn bộ thay đổi gồm bố cục True Bento có thẻ dọc Mobile Live Preview `390px` (`row-span-2`) và bỏ gạch chân ở cụm chữ highlight Hero, sau đó đẩy lên `origin/main`.
+- **Artifacts & Files Updated**:
+  - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận lịch sử commit & push.
+- **Verification & Gate Status**: Đã qua `npm run typecheck && npm run lint && npm run build` (0 lỗi, 18/18 trang tĩnh); tiến hành `git add`, `git commit`, `git push`.

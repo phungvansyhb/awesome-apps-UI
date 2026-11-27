@@ -11,14 +11,17 @@ interface TemplateCardProps {
   template: TemplateMetadata;
   index: number;
   colSpanClass?: string;
+  viewport?: "desktop" | "mobile";
 }
 
 export function TemplateCard({
   template,
   index,
   colSpanClass,
+  viewport = "desktop",
 }: TemplateCardProps) {
   const categoryLabel = getCategoryLabel(template.category);
+  const isMobileTall = viewport === "mobile";
 
   const spanClass =
     colSpanClass ??
@@ -42,16 +45,23 @@ export function TemplateCard({
         href={`/templates/${template.slug}/`}
         className="flex h-full flex-col overflow-hidden rounded-[22px] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-3.5 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--text-muted)] hover:shadow-[0_24px_60px_rgba(0,0,0,0.12)] sm:p-4"
       >
-        {/* Uniform-height live scaled preview stage keeps every Bento row flush */}
-        <div className="relative h-[235px] w-full overflow-hidden sm:h-[310px] lg:h-[360px]">
+        {/* Live scaled preview stage (Desktop row height or Tall Mobile row-span-2) */}
+        <div
+          className={`relative w-full overflow-hidden ${
+            isMobileTall
+              ? "h-[480px] sm:h-[540px] lg:h-auto lg:min-h-[640px] lg:flex-1"
+              : "h-[235px] sm:h-[310px] lg:h-[345px]"
+          }`}
+        >
           <ScaledPreviewFrame
             slug={template.slug}
             title={template.name}
             surfaceTone={template.surfaceTone}
+            viewport={viewport}
           />
 
           {/* Subtle hover overlay CTA */}
-          <div className="pointer-events-none absolute inset-0 flex items-end justify-end p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
+          <div className="pointer-events-none absolute inset-0 z-20 flex items-end justify-end p-4 opacity-0 transition-opacity duration-300 group-hover:opacity-100">
             <span className="inline-flex items-center gap-1.5 rounded-full bg-[#111111]/92 px-4 py-2 text-xs font-semibold text-white shadow-lg backdrop-blur-sm">
               <span>Mở Live Demo</span>
               <ArrowUpRight className="h-3.5 w-3.5" />
@@ -60,7 +70,11 @@ export function TemplateCard({
         </div>
 
         {/* Metadata footer */}
-        <div className="mt-4 flex flex-1 flex-col justify-between px-1 pb-1">
+        <div
+          className={`mt-4 flex flex-col justify-between px-1 pb-1 ${
+            isMobileTall ? "shrink-0" : "flex-1"
+          }`}
+        >
           <div>
             <div className="flex items-center justify-between gap-3">
               <span className="text-[11px] font-semibold tracking-[0.12em] text-[var(--text-muted)] uppercase">

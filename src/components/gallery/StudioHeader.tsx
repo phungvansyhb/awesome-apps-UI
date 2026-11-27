@@ -15,11 +15,35 @@ export function StudioHeader() {
         {/* Brand mark */}
         <Link
           href="/"
-          className="group flex items-baseline gap-2.5 text-[var(--text-primary)]"
+          aria-label={`${siteConfig.brandName} — Trang chủ`}
+          className="group flex items-center gap-2.5 text-[var(--text-primary)]"
         >
-          <span className="inline-block h-2.5 w-2.5 rounded-full bg-[var(--accent-highlight)] transition-transform duration-300 group-hover:scale-125" />
-          <span className="text-base font-bold tracking-tight">
-            {siteConfig.brandName}
+          <span
+            aria-hidden="true"
+            className="flex h-8 w-8 shrink-0 items-center justify-center overflow-hidden rounded-[9px] bg-[var(--accent-primary)] shadow-xs transition-transform duration-300 ease-out group-hover:-rotate-3 group-hover:scale-105"
+          >
+            <svg
+              viewBox="0 0 64 64"
+              fill="none"
+              className="h-full w-full"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <circle cx="20" cy="20" r="6" fill="var(--accent-highlight)" />
+              <path
+                d="M22 44L42 20M42 44L28 27"
+                stroke="var(--accent-primary-fg)"
+                strokeWidth="4.8"
+                strokeLinecap="round"
+              />
+            </svg>
+          </span>
+          <span className="flex flex-col leading-none">
+            <span className="text-[15px] font-bold tracking-[-0.02em] text-[var(--text-primary)]">
+              {siteConfig.brandName}
+            </span>
+            <span className="mt-0.5 text-[9.5px] font-semibold tracking-[0.14em] text-[var(--text-muted)] uppercase">
+              UI Studio
+            </span>
           </span>
         </Link>
 

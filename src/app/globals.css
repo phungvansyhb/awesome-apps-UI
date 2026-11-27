@@ -11,6 +11,22 @@
   --accent-primary: #18181b;
   --accent-primary-fg: #ffffff;
   --accent-highlight: #ea580c;
+  --hero-shimmer-gradient: linear-gradient(
+    110deg,
+    #c2410c 0%,
+    #ea580c 28%,
+    #f59e0b 48%,
+    #fbbf24 52%,
+    #ea580c 72%,
+    #b45309 100%
+  );
+  --hero-underline-gradient: linear-gradient(
+    90deg,
+    rgba(194, 65, 12, 0.25) 0%,
+    rgba(234, 88, 12, 0.85) 45%,
+    rgba(245, 158, 11, 0.9) 75%,
+    rgba(234, 88, 12, 0.2) 100%
+  );
   --radius-card: 20px;
   --radius-pill: 9999px;
 }
@@ -26,6 +42,22 @@ html[data-theme="dark"] {
   --accent-primary: #fafafa;
   --accent-primary-fg: #09090b;
   --accent-highlight: #fb923c;
+  --hero-shimmer-gradient: linear-gradient(
+    110deg,
+    #f97316 0%,
+    #fb923c 28%,
+    #fde68a 48%,
+    #fef3c7 52%,
+    #fb923c 72%,
+    #f59e0b 100%
+  );
+  --hero-underline-gradient: linear-gradient(
+    90deg,
+    rgba(249, 115, 22, 0.3) 0%,
+    rgba(251, 146, 60, 0.9) 45%,
+    rgba(253, 230, 138, 0.95) 75%,
+    rgba(251, 146, 60, 0.25) 100%
+  );
 }
 
 @theme inline {
@@ -146,6 +178,30 @@ html {
   animation-play-state: paused;
 }
 
+@keyframes xgd-hero-shimmer {
+  0% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: -100% 50%;
+  }
+}
+
+.hero-keyword-shimmer {
+  background-image: var(--hero-shimmer-gradient);
+  background-size: 240% 100%;
+  background-position: 0% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: xgd-hero-shimmer 4.2s ease-in-out infinite;
+}
+
+.hero-keyword-underline {
+  background-image: var(--hero-underline-gradient);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .marquee-track-left {
     animation-duration: 70s;
@@ -158,5 +214,9 @@ html {
   }
   .marquee-col-down {
     animation-duration: 90s;
+  }
+  .hero-keyword-shimmer {
+    animation: none;
+    background-position: 45% 50%;
   }
 }

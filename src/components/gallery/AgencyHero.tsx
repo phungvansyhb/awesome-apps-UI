@@ -1,7 +1,13 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { animate, motion, useInView } from "framer-motion";
+import {
+  AnimatePresence,
+  animate,
+  motion,
+  useInView,
+  useReducedMotion,
+} from "framer-motion";
 import { ArrowDownRight, ArrowUpRight } from "lucide-react";
 
 interface AgencyHeroProps {
@@ -9,6 +15,8 @@ interface AgencyHeroProps {
 }
 
 const EASE_EDITORIAL: [number, number, number, number] = [0.22, 1, 0.36, 1];
+const HERO_KEYWORDS = ["sống động", "tinh tế", "đẳng cấp"] as const;
+const ROTATE_INTERVAL_MS = 2800;
 
 const TRUSTED_AVATARS = [
   {
@@ -75,6 +83,155 @@ function AnimatedCounter({
   );
 }
 
+function RotatingHeroKeyword() {
+  const prefersReducedMotion = useReducedMotion();
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isPaused, setIsPaused] = useState(false);
+  const [measuredWidth, setMeasuredWidth] = useState<number | null>(null);
+  const measureRef = useRef<HTMLSpanElement | null>(null);
+
+  const activeWord = prefersReducedMotion
+    ? HERO_KEYWORDS[0]
+    : HERO_KEYWORDS[activeIndex];
+
+  useEffect(() => {
+    if (prefersReducedMotion || isPaused) return;
+
+    const intervalId = window.setInterval(() => {
+      if (document.visibilityState === "visible") {
+        setActiveIndex((prev) => (prev + 1) % HERO_KEYWORDS.length);
+      }
+    }, ROTATE_INTERVAL_MS);
+
+    return () => window.clearInterval(intervalId);
+  }, [isPaused, prefersReducedMotion]);
+
+  useEffect(() => {
+    const node = measureRef.current;
+    if (!node) return;
+
+    const updateWidth = () => {
+      const nextWidth = Math.ceil(node.getBoundingClientRect().width);
+      if (nextWidth > 0) {
+        setMeasuredWidth((prev) => (prev === nextWidth ? prev : nextWidth));
+      }
+    };
+
+    const observer = new ResizeObserver(updateWidth);
+    observer.observe(node);
+
+    const rafId = window.requestAnimationFrame(updateWidth);
+    let active = true;
+    document.fonts?.ready.then(() => {
+      if (active) updateWidth();
+    });
+
+    return () => {
+      active = false;
+      window.cancelAnimationFrame(rafId);
+      observer.disconnect();
+    };
+  }, [activeWord]);
+
+  return (
+    <>
+      <span className="sr-only">{HERO_KEYWORDS.join(", ")}</span>
+
+      {/* Hidden measurer inside H1 typography context for exact responsive spring width */}
+      <span
+        ref={measureRef}
+        aria-hidden="true"
+        className="pointer-events-none invisible absolute top-0 left-0 pr-[0.12em] pl-[0.04em] font-serif font-medium italic whitespace-nowrap select-none"
+      >
+        {activeWord}
+      </span>
+
+      <motion.span
+        aria-hidden="true"
+        initial={false}
+        animate={
+          measuredWidth !== null ? { width: measuredWidth } : undefined
+        }
+        transition={
+          prefersReducedMotion
+            ? { duration: 0 }
+            : { type: "spring", stiffness: 260, damping: 28, mass: 0.78 }
+        }
+        onMouseEnter={() => setIsPaused(true)}
+        onMouseLeave={() => setIsPaused(false)}
+        className="relative inline-block align-baseline whitespace-nowrap"
+      >
+        {/* In-flow invisible strut preserves native Playfair Display baseline & line-height */}
+        <span className="invisible inline-block pr-[0.12em] pl-[0.04em] font-serif font-medium italic whitespace-nowrap select-none">
+          {activeWord}
+        </span>
+
+        {/* Soft vertical mask generously padded for Vietnamese diacritics & italic overhang */}
+        <span className="pointer-events-none absolute -top-[0.18em] -right-[0.08em] -bottom-[0.18em] -left-[0.04em] overflow-hidden">
+          <AnimatePresence mode="sync" initial={false}>
+            <motion.span
+              key={activeWord}
+              initial={
+                prefersReducedMotion
+                  ? { opacity: 1, y: "0%" }
+                  : { y: "96%", opacity: 0, filter: "blur(7px)" }
+              }
+              animate={{ y: "0%", opacity: 1, filter: "blur(0px)" }}
+              exit={
+                prefersReducedMotion
+                  ? { opacity: 0 }
+                  : { y: "-96%", opacity: 0, filter: "blur(7px)" }
+              }
+              transition={{
+                duration: prefersReducedMotion ? 0 : 0.62,
+                ease: EASE_EDITORIAL,
+              }}
+              className="hero-keyword-shimmer absolute top-[0.18em] left-[0.04em] inline-block pr-[0.12em] pl-[0.04em] font-serif font-medium italic whitespace-nowrap will-change-transform"
+            >
+              {activeWord}
+            </motion.span>
+          </AnimatePresence>
+        </span>
+
+        {/* Editorial animated underline synchronized with each keyword */}
+        <span className="pointer-events-none absolute right-[0.08em] bottom-[0.01em] left-[0.03em] h-[2px] overflow-hidden rounded-full sm:h-[2.5px]">
+          <AnimatePresence mode="sync" initial={false}>
+            <motion.span
+              key={`underline-${activeWord}`}
+              initial={
+                prefersReducedMotion
+                  ? { scaleX: 1, opacity: 1, originX: 0 }
+                  : { scaleX: 0, opacity: 0.25, originX: 0 }
+              }
+              animate={{ scaleX: 1, opacity: 1, originX: 0 }}
+              exit={
+                prefersReducedMotion
+                  ? { opacity: 0 }
+                  : {
+                      scaleX: 0,
+                      opacity: 0,
+                      originX: 1,
+                      transition: {
+                        originX: { duration: 0 },
+                        duration: 0.42,
+                        ease: EASE_EDITORIAL,
+                      },
+                    }
+              }
+              transition={{
+                duration: prefersReducedMotion ? 0 : 0.64,
+                delay: prefersReducedMotion ? 0 : 0.08,
+                ease: EASE_EDITORIAL,
+              }}
+              className="hero-keyword-underline absolute inset-0 block rounded-full"
+            />
+          </AnimatePresence>
+        </span>
+      </motion.span>
+    </>
+  );
+}
+
 export function AgencyHero({ templateCount }: AgencyHeroProps) {
   return (
     <section className="relative overflow-hidden border-b border-[var(--border-subtle)]">
@@ -95,13 +252,10 @@ export function AgencyHero({ templateCount }: AgencyHeroProps) {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.7, delay: 0.08, ease: EASE_EDITORIAL }}
-          className="max-w-5xl text-[2.45rem] leading-[1.06] font-extrabold tracking-[-0.035em] text-[var(--text-primary)] sm:text-6xl lg:text-[4.75rem]"
+          className="relative max-w-5xl text-[2.45rem] leading-[1.08] font-extrabold tracking-[-0.035em] text-[var(--text-primary)] sm:text-6xl lg:text-[4.75rem]"
         >
-          Những mẫu website{" "}
-          <span className="font-serif font-medium italic text-[var(--accent-highlight)]">
-            sống động
-          </span>{" "}
-          được chế tác cho thương hiệu dẫn đầu.
+          Những mẫu website <RotatingHeroKeyword /> được chế tác cho thương hiệu
+          dẫn đầu.
         </motion.h1>
 
         {/* Asymmetric editorial bottom row */}
@@ -168,7 +322,7 @@ export function AgencyHero({ templateCount }: AgencyHeroProps) {
 
           <div className="grid grid-cols-3 gap-4 border-t border-[var(--border-subtle)] pt-6 lg:col-span-6 lg:border-t-0 lg:pt-0">
             <div className="border-l border-[var(--border-subtle)] pl-4">
-              <p className="font-serif text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
+              <p className="font-sans text-3xl font-bold tracking-[-0.03em] text-[var(--text-primary)] sm:text-4xl">
                 <AnimatedCounter
                   target={templateCount}
                   padZero
@@ -181,7 +335,7 @@ export function AgencyHero({ templateCount }: AgencyHeroProps) {
               </p>
             </div>
             <div className="border-l border-[var(--border-subtle)] pl-4">
-              <p className="font-serif text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
+              <p className="font-sans text-3xl font-bold tracking-[-0.03em] text-[var(--text-primary)] sm:text-4xl">
                 <AnimatedCounter
                   target={100}
                   suffix="%"
@@ -194,7 +348,7 @@ export function AgencyHero({ templateCount }: AgencyHeroProps) {
               </p>
             </div>
             <div className="border-l border-[var(--border-subtle)] pl-4">
-              <p className="font-serif text-3xl font-semibold tracking-tight text-[var(--text-primary)] sm:text-4xl">
+              <p className="font-sans text-3xl font-bold tracking-[-0.03em] text-[var(--text-primary)] sm:text-4xl">
                 <AnimatedCounter target={3} duration={1.1} delay={0.4} />
               </p>
               <p className="mt-1 text-xs leading-snug text-[var(--text-muted)]">

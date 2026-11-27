@@ -278,3 +278,53 @@
 - **Artifacts & Files Updated**:
   - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận lịch sử commit & push bản thiết kế lại.
 - **Verification & Gate Status**: Đã qua `npm run typecheck && npm run lint && npm run build`; tiến hành `git add`, `git commit`, `git push`.
+
+---
+
+## [2026-11-27T06:47:00Z] — Prompt 23: `/grill-me` & Implement Rotating Editorial Shimmer Keyword in `AgencyHero` (`sống động` → `tinh tế` → `đẳng cấp`)
+- **Phase / Stage**: `CONSTRUCTION / UX Polish (AgencyHero Rotating Keyword)`
+- **User Input**: `"/grill-me Ở phần hero section, tạo hiệu ứng thay đổi text sống động -> tinh tế -> đẳng cấp . Hiện tại phần hero section hơi nhàm chán"`
+- **Clarifications / Decisions** (chốt qua `/grill-me` 5 bước & Gate 1):
+  - Giữ nguyên bố cục và nền Hero sạch sẽ, không bổ sung thêm widget/card/thanh phụ trợ gây rối mắt; tập trung 100% độ tinh xảo vào hiệu ứng xoay vòng từ khóa trong H1.
+  - Chuỗi từ khóa xoay vòng: `sống động` → `tinh tế` → `đẳng cấp` với nhịp `2.8s/từ`, lặp vô hạn, tự tạm dừng khi di chuột vào từ khóa và tôn trọng `prefers-reduced-motion`.
+  - Phong cách chuyển động: **Editorial Vertical Reveal + Blur nhẹ** (`y: 96% → 0% → -96%`, `blur(7px) → blur(0px)`), kết hợp **nét gạch chân động** vẽ mượt từ trái sang phải (rút về phải khi thoát) và **co giãn độ rộng mượt (spring width)** đo chính xác theo font responsive (`ResizeObserver` + `document.fonts.ready`).
+  - Màu sắc: hiệu ứng **gradient ánh kim chuyển động (shimmer gradient)** đồng bộ cho cả Light Mode (cam đồng – vàng hổ phách) và Dark Mode (cam sáng – vàng champagne), có khoảng đệm mask và padding nghiêng chống cắt dấu tiếng Việt (`ố`, `ộ`, `ế`, `ẳ`, `ấ`).
+- **Artifacts & Files Updated**:
+  - `src/app/globals.css` — Bổ sung token `--hero-shimmer-gradient`, `--hero-underline-gradient`, keyframes `xgd-hero-shimmer`, class `.hero-keyword-shimmer` / `.hero-keyword-underline` và fallback `prefers-reduced-motion`.
+  - `src/components/gallery/AgencyHero.tsx` — Xây dựng component `RotatingHeroKeyword` và tích hợp vào tiêu đề H1.
+  - [`aidlc-docs/aidlc-state.md`](aidlc-state.md), [`aidlc-docs/audit.md`](audit.md) — Cập nhật trạng thái và nhật ký kiểm toán.
+- **Verification & Gate Status**: `npm run typecheck && npm run lint && npm run build` PASS (0 lỗi TypeScript, 0 lỗi ESLint, xuất tĩnh thành công).
+
+---
+
+## [2026-11-27T07:14:00Z] — Prompt 24: Switch Hero Metric Numbers Font to `Be Vietnam Pro` (`font-sans`)
+- **Phase / Stage**: `CONSTRUCTION / UX Polish (AgencyHero Typography)`
+- **User Input**: `"sửa cả font chứ của 3 số ở phần hero section về font vietnam"`
+- **Clarifications / Decisions**:
+  - Chuyển font của 3 con số chỉ số ở Hero (`02`, `100%`, `3`) từ `font-serif` (`Playfair Display`) sang `font-sans` (`Be Vietnam Pro`), `font-bold tracking-[-0.03em]`, đồng bộ với các chỉ số số học tại `BentoHighlightsSection`.
+- **Artifacts & Files Updated**:
+  - `src/components/gallery/AgencyHero.tsx` — Cập nhật lớp font cho 3 thẻ số liệu trong Hero.
+  - [`aidlc-docs/aidlc-state.md`](aidlc-state.md), [`aidlc-docs/audit.md`](audit.md) — Cập nhật trạng thái và nhật ký kiểm toán.
+- **Verification & Gate Status**: `npm run typecheck && npm run lint && npm run build` PASS (0 lỗi, xuất tĩnh 12/12 trang).
+
+---
+
+## [2026-11-27T07:16:00Z] — Prompt 25: Add Brand Monogram SVG Logo Lockup to `StudioHeader`
+- **Phase / Stage**: `CONSTRUCTION / UX Polish (StudioHeader Brand Logo)`
+- **User Input**: `"thêm logo vào header nữa"`
+- **Clarifications / Decisions**:
+  - Thay thế dấu chấm tròn đơn giản trên Header bằng logo monogram SVG chữ `X` cách điệu đồng bộ 100% với favicon [`src/app/icon.svg`](../src/app/icon.svg) kết hợp lockup tên thương hiệu **Xưởng Giao Diện · UI STUDIO**, tự động thích ứng màu theo cả Light Mode và Dark Mode (`--accent-primary`, `--accent-primary-fg`, `--accent-highlight`) cùng hiệu ứng hover nhẹ.
+- **Artifacts & Files Updated**:
+  - `src/components/gallery/StudioHeader.tsx` — Tích hợp logo SVG monogram và wordmark lockup vào thanh điều hướng đầu trang.
+  - [`aidlc-docs/aidlc-state.md`](aidlc-state.md), [`aidlc-docs/audit.md`](audit.md) — Cập nhật trạng thái và nhật ký kiểm toán.
+- **Verification & Gate Status**: `npm run typecheck && npm run lint && npm run build` PASS (0 lỗi, xuất tĩnh 12/12 trang).
+
+---
+
+## [2026-11-27T07:17:15Z] — Prompt 26: Commit & Push Hero Rotating Shimmer Keyword, `Be Vietnam Pro` Metric Font & `StudioHeader` Brand Logo
+- **Phase / Stage**: `OPERATIONS / Release Deployment`
+- **User Input**: `"commit và push"`
+- **Clarifications / Decisions**: Commit toàn bộ thay đổi gồm hiệu ứng xoay vòng từ khóa ánh kim ở Hero (`sống động` → `tinh tế` → `đẳng cấp`), đổi font 3 chỉ số Hero sang `Be Vietnam Pro`, và thêm logo SVG monogram cho `StudioHeader`, sau đó đẩy lên `origin/main`.
+- **Artifacts & Files Updated**:
+  - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận lịch sử commit & push.
+- **Verification & Gate Status**: Đã qua `npm run typecheck && npm run lint && npm run build` (0 lỗi, 12/12 trang tĩnh); tiến hành `git add`, `git commit`, `git push`.

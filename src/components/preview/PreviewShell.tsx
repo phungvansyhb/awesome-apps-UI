@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Minimize2, RotateCw } from "lucide-react";
 import { withBasePath } from "@/lib/paths";
@@ -27,11 +27,32 @@ export function PreviewShell({
   prevTemplate,
   nextTemplate,
 }: PreviewShellProps) {
+  const iframeRef = useRef<HTMLIFrameElement | null>(null);
   const [viewport, setViewport] = useState<ViewportMode>("desktop");
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
 
   const iframeSrc = withBasePath(`/preview/${slug}/`);
+
+  // Clear loading spinner if same-origin iframe already completed before React hydrated
+  useEffect(() => {
+    const rafId = window.requestAnimationFrame(() => {
+      const iframe = iframeRef.current;
+      try {
+        const doc = iframe?.contentDocument;
+        if (
+          doc &&
+          doc.readyState === "complete" &&
+          doc.body?.childElementCount > 0
+        ) {
+          setIsLoading(false);
+        }
+      } catch {
+        // Cross-origin safeguard
+      }
+    });
+    return () => window.cancelAnimationFrame(rafId);
+  }, [slug]);
 
   useEffect(() => {
     if (!isFullscreen) return;
@@ -89,6 +110,7 @@ export function PreviewShell({
           )}
 
           <iframe
+            ref={iframeRef}
             key={slug}
             src={iframeSrc}
             title={`Bản xem trước trực tiếp: ${name}`}

@@ -167,3 +167,27 @@
 - **Artifacts & Files Updated**:
   - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận lịch sử commit & push bản sửa lỗi Marquee.
 - **Verification & Gate Status**: Đã qua `npm run typecheck && npm run lint && npm run build`; tiến hành `git add`, `git commit`, `git push`.
+
+---
+
+## [2026-11-27T04:34:20Z] — Prompt 14: Fix SSR/SSG `onLoad` Hydration Race Causing Invisible Template Images (`SafeImage` & `PreviewShell`)
+- **Phase / Stage**: `OPERATIONS / Hotfix (SafeImage & PreviewShell)`
+- **User Input**: `"phần ảnh ở các template không xem được , khi bấm xem chi tiết ở template thì lại xem được , kiểm tra xem đang bị lỗi gì"`
+- **Clarifications / Decisions**:
+  - **Root Cause**: Trang `/preview/[slug]/` được xuất tĩnh (SSG) nên trình duyệt tải xong thẻ `<img>` (hoặc lấy từ cache) *trước* khi React kịp hydrate và gắn `onLoad`. Vì `SafeImage` khởi tạo `status = "loading"` và ẩn ảnh bằng `opacity-0` + lớp phủ skeleton, sự kiện `onLoad` không bao giờ bắn lại, khiến toàn bộ ảnh tĩnh trên trang bị kẹt ẩn mãi mãi; trong khi modal "Xem chi tiết" mount hoàn toàn ở client sau khi hydrate nên `onLoad` bắn bình thường.
+  - **Fix**: Bỏ ẩn `opacity-0` mặc định trong `SafeImage.tsx` để ảnh hiển thị ngay từ HTML tĩnh, chỉ chuyển sang fallback `ImageOff` khi `onError` hoặc kiểm tra `img.complete && img.naturalWidth === 0` sau hydration. Đồng thời bổ sung kiểm tra `contentDocument.readyState` qua `requestAnimationFrame` trong `PreviewShell.tsx` để phòng ngừa race condition tương tự cho khung `<iframe>`.
+- **Artifacts & Files Updated**:
+  - `src/components/ui/SafeImage.tsx` — Sửa triệt để lỗi race condition `onLoad` khi xuất tĩnh SSG.
+  - `src/components/preview/PreviewShell.tsx` — Bổ sung kiểm tra `iframe.contentDocument.readyState` sau hydration.
+  - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận phân tích nguyên nhân và bản sửa lỗi.
+- **Verification & Gate Status**: `npm run typecheck && npm run lint && npm run build` PASS (xác nhận thẻ `<img>` trong `out/preview/lumiere-noi-that/index.html` không còn `opacity-0`).
+
+---
+
+## [2026-11-27T06:05:48Z] — Prompt 15: Commit & Push SafeImage & PreviewShell Hydration Hotfix
+- **Phase / Stage**: `OPERATIONS / Hotfix Deployment`
+- **User Input**: `"commit và push"`
+- **Clarifications / Decisions**: Commit bản sửa lỗi hiển thị ảnh trên trang xuất tĩnh (`src/components/ui/SafeImage.tsx`, `src/components/preview/PreviewShell.tsx`) và đẩy lên `origin/main`.
+- **Artifacts & Files Updated**:
+  - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận lịch sử commit & push bản sửa lỗi `SafeImage` & `PreviewShell`.
+- **Verification & Gate Status**: Đã qua `npm run typecheck && npm run lint && npm run build`; tiến hành `git add`, `git commit`, `git push`.

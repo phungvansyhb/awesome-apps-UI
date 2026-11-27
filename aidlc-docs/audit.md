@@ -143,3 +143,27 @@
 - **Artifacts & Files Updated**:
   - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận lịch sử commit & push cho `UNIT-07`.
 - **Verification & Gate Status**: Đã qua `npm run typecheck && npm run lint && npm run build`; tiến hành `git add`, `git commit`, `git push`.
+
+---
+
+## [2026-11-27T04:24:30Z] — Prompt 12: Fix Showcase Marquee Animation & Seamless Looping
+- **Phase / Stage**: `OPERATIONS / Hotfix (ShowcaseMarquee)`
+- **User Input**: `"sao phần marque không thấy chạy nhỉ ?"`
+- **Clarifications / Decisions**:
+  - Xác định nguyên nhân: quy tắc `@media (prefers-reduced-motion: reduce) { animation: none; }` khiến băng chuyền bị đứng yên hoàn toàn trên các máy bật tiết kiệm pin / tắt hiệu ứng OS, đồng thời độ rộng 2 bản sao hơi ngắn trên màn hình lớn và tốc độ `38s/42s` quá chậm.
+  - Sửa đổi: chuyển sang làm chậm mượt (`70s`/`75s`) thay vì `animation: none` ở chế độ reduced-motion, nhân đôi mỗi nửa thành 2 bản sao (`gap-4 pr-4`) để lặp `-50%` liền mạch không giật trên cả màn hình ultrawide, tăng tốc độ lên `26s`/`30s` kèm `will-change: transform`.
+- **Artifacts & Files Updated**:
+  - `src/app/globals.css` — Cập nhật keyframes `xgd-marquee-left` / `xgd-marquee-right`, tốc độ và fallback `prefers-reduced-motion`.
+  - `src/components/gallery/ShowcaseMarquee.tsx` — Tách 2 nửa giống hệt nhau (`halfSet = [...blocks, ...blocks]`) để vòng lặp vô tận mượt 100%.
+  - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận bản sửa lỗi Marquee.
+- **Verification & Gate Status**: `npm run typecheck && npm run lint && npm run build` PASS (đã xác nhận keyframes `xgd-marquee-*` trong bundle CSS xuất tĩnh).
+
+---
+
+## [2026-11-27T04:26:59Z] — Prompt 13: Commit & Push Showcase Marquee Hotfix
+- **Phase / Stage**: `OPERATIONS / Hotfix Deployment`
+- **User Input**: `"commit và push"`
+- **Clarifications / Decisions**: Commit bản sửa lỗi Marquee (`src/app/globals.css`, `src/components/gallery/ShowcaseMarquee.tsx`) và đẩy lên `origin/main` để Cloudflare Pages tự động cập nhật `xuong-giao-dien.pages.dev`.
+- **Artifacts & Files Updated**:
+  - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận lịch sử commit & push bản sửa lỗi Marquee.
+- **Verification & Gate Status**: Đã qua `npm run typecheck && npm run lint && npm run build`; tiến hành `git add`, `git commit`, `git push`.

@@ -38,7 +38,7 @@ html {
   scroll-behavior: smooth;
 }
 
-@keyframes marquee-left {
+@keyframes xgd-marquee-left {
   0% {
     transform: translate3d(0, 0, 0);
   }
@@ -47,7 +47,7 @@ html {
   }
 }
 
-@keyframes marquee-right {
+@keyframes xgd-marquee-right {
   0% {
     transform: translate3d(-50%, 0, 0);
   }
@@ -60,15 +60,15 @@ html {
   mask-image: linear-gradient(
     to right,
     transparent 0%,
-    black 7%,
-    black 93%,
+    black 6%,
+    black 94%,
     transparent 100%
   );
   -webkit-mask-image: linear-gradient(
     to right,
     transparent 0%,
-    black 7%,
-    black 93%,
+    black 6%,
+    black 94%,
     transparent 100%
   );
 }
@@ -76,23 +76,27 @@ html {
 .marquee-track-left {
   display: flex;
   width: max-content;
-  animation: marquee-left 38s linear infinite;
+  will-change: transform;
+  animation: xgd-marquee-left 26s linear infinite;
 }
 
 .marquee-track-right {
   display: flex;
   width: max-content;
-  animation: marquee-right 42s linear infinite;
+  will-change: transform;
+  animation: xgd-marquee-right 30s linear infinite;
 }
 
-.marquee-group:hover .marquee-track-left,
-.marquee-group:hover .marquee-track-right {
+.marquee-track-left:hover,
+.marquee-track-right:hover {
   animation-play-state: paused;
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .marquee-track-left,
+  .marquee-track-left {
+    animation-duration: 70s;
+  }
   .marquee-track-right {
-    animation: none;
+    animation-duration: 75s;
   }
 }

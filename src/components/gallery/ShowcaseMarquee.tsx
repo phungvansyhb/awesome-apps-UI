@@ -238,38 +238,45 @@ function MarqueeRow({
   blocks: MarqueeBlock[];
   direction: "left" | "right";
 }) {
-  const repeated = [...blocks, ...blocks];
+  const halfSet = [...blocks, ...blocks];
 
   return (
-    <div className="marquee-group marquee-mask overflow-hidden">
+    <div className="marquee-mask w-full overflow-hidden">
       <div
         className={
-          direction === "left"
-            ? "marquee-track-left gap-4"
-            : "marquee-track-right gap-4"
+          direction === "left" ? "marquee-track-left" : "marquee-track-right"
         }
       >
-        {repeated.map((block, idx) => (
-          <Link
-            key={`${block.id}-${idx}`}
-            href={block.href}
-            className="group flex w-[275px] shrink-0 flex-col rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--text-muted)]"
+        {[0, 1].map((copyIndex) => (
+          <div
+            key={copyIndex}
+            aria-hidden={copyIndex === 1}
+            className="flex shrink-0 gap-4 pr-4"
           >
-            <div className="h-24 w-full">
-              <MiniBlockVisual block={block} />
-            </div>
-            <div className="mt-2.5 flex items-center justify-between gap-2 px-1">
-              <div className="min-w-0">
-                <p className="truncate text-xs font-semibold text-[var(--text-primary)]">
-                  {block.label}
-                </p>
-                <p className="text-[10px] text-[var(--text-muted)]">
-                  {block.category}
-                </p>
-              </div>
-              <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-[var(--text-muted)] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--text-primary)]" />
-            </div>
-          </Link>
+            {halfSet.map((block, idx) => (
+              <Link
+                key={`${copyIndex}-${block.id}-${idx}`}
+                href={block.href}
+                tabIndex={copyIndex === 1 ? -1 : undefined}
+                className="group flex w-[275px] shrink-0 flex-col rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:border-[var(--text-muted)]"
+              >
+                <div className="h-24 w-full">
+                  <MiniBlockVisual block={block} />
+                </div>
+                <div className="mt-2.5 flex items-center justify-between gap-2 px-1">
+                  <div className="min-w-0">
+                    <p className="truncate text-xs font-semibold text-[var(--text-primary)]">
+                      {block.label}
+                    </p>
+                    <p className="text-[10px] text-[var(--text-muted)]">
+                      {block.category}
+                    </p>
+                  </div>
+                  <ArrowUpRight className="h-3.5 w-3.5 shrink-0 text-[var(--text-muted)] transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[var(--text-primary)]" />
+                </div>
+              </Link>
+            ))}
+          </div>
         ))}
       </div>
     </div>

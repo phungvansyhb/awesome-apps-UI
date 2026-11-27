@@ -46,3 +46,42 @@
 - **Artifacts & Files Updated**:
   - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận lịch sử commit & push ban đầu.
 - **Verification & Gate Status**: Đang thực hiện `git add`, `git commit` và `git push -u origin main`; vẫn giữ nguyên trạng thái chờ **Gate 1 Sign-Off**.
+
+---
+
+## [2026-11-27T03:07:45Z] — Prompt 4: Explain UNIT-01 Scope
+- **Phase / Stage**: `INCEPTION / Gate 1 Review (Q&A)`
+- **User Input**: `"UNIT 01  là gì"`
+- **Clarifications / Decisions**: Giải thích chi tiết phạm vi, danh sách file và mục tiêu kiểm chứng của `UNIT-01: Core Shared Utilities & Live Preview Engine`.
+- **Artifacts & Files Updated**:
+  - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận câu hỏi làm rõ về `UNIT-01`.
+- **Verification & Gate Status**: Không sửa mã nguồn ứng dụng; vẫn giữ nguyên trạng thái chờ **Gate 1 Sign-Off**.
+
+---
+
+## [2026-11-27T03:17:00Z] — Prompt 5: Execute Gate 1 Approved Construction (`UNIT-01`, `UNIT-02`, `UNIT-03`, `UNIT-06`; Defer `UNIT-04` & `UNIT-05`)
+- **Phase / Stage**: `CONSTRUCTION / UNIT-01 → UNIT-03 + UNIT-06 (Scoped MVP Release)`
+- **User Input**: `"Tạm thời bỏ qua Unit 04 và và 05, xử lý từ Unit 01 đến 06 cho tôi"`
+- **Clarifications / Decisions**:
+  - Phê duyệt **Gate 1 Sign-Off** với phạm vi triển khai ngay `UNIT-01`, `UNIT-02`, `UNIT-03`, `UNIT-06`.
+  - Tạm hoãn `UNIT-04` (Technical Docs & Dashboard Analytics) và `UNIT-05` (Portfolio Creative & Dịch vụ / Hospitality).
+- **Artifacts & Files Updated**:
+  - **`UNIT-01`**: `src/lib/paths.ts`, `src/components/ui/SafeImage.tsx`, `src/components/preview/PreviewToolbar.tsx`, `src/components/preview/PreviewShell.tsx`, `src/app/templates/[slug]/page.tsx`, `src/app/preview/layout.tsx`, `src/app/preview/[slug]/page.tsx`.
+  - **`UNIT-02`**: `src/components/gallery/StudioHeader.tsx`, `src/components/gallery/AgencyHero.tsx`, `src/components/gallery/ScaledPreviewFrame.tsx`, `src/components/gallery/TemplateCard.tsx`, `src/components/gallery/GalleryShowcase.tsx`, `src/components/gallery/ProcessSection.tsx`, `src/components/gallery/StudioFooter.tsx`, `src/app/page.tsx`.
+  - **`UNIT-03`**: `src/templates/lumiere-noi-that/data.ts`, `src/templates/lumiere-noi-that/index.tsx`, `src/templates/kova-ai-saas/data.ts`, `src/templates/kova-ai-saas/index.tsx`, `src/templates/registry.ts`.
+  - **`UNIT-06` & AI-DLC State**: `src/components/gallery/AgencyHero.tsx` (polish), [`aidlc-docs/aidlc-state.md`](aidlc-state.md), [`aidlc-docs/construction/plans/construction-plan.md`](construction/plans/construction-plan.md), [`aidlc-docs/operations/release-and-packaging.md`](operations/release-and-packaging.md), [`aidlc-docs/audit.md`](audit.md).
+- **Verification & Gate Status**:
+  - `npm run typecheck && npm run lint && npm run build`: **PASS** (0 lỗi, 7/7 trang tĩnh xuất ra `out/`).
+  - Subpath static export (`NEXT_PUBLIC_BASE_PATH=/awesome-apps-UI npm run build`): **PASS** (xác nhận iframe src `/awesome-apps-UI/preview/...` chính xác).
+  - Kiểm tra ảnh Unsplash (`lumiere-noi-that`): **8/8 trả mã HTTP 200 OK**.
+  - Kiểm tra SEO `<title>` tiếng Việt trên `out/index.html`, `out/templates/lumiere-noi-that/index.html`, `out/templates/kova-ai-saas/index.html`: **PASS**.
+
+---
+
+## [2026-11-27T03:21:27Z] — Prompt 6: Commit & Push Scoped Construction Release (`UNIT-01`, `UNIT-02`, `UNIT-03`, `UNIT-06`)
+- **Phase / Stage**: `CONSTRUCTION → OPERATIONS / Version Control Checkpoint`
+- **User Input**: `"commit và push"`
+- **Clarifications / Decisions**: Commit toàn bộ mã nguồn hoàn chỉnh của `UNIT-01`, `UNIT-02`, `UNIT-03`, `UNIT-06` cùng tài liệu AI-DLC cập nhật và đẩy lên `origin/main`.
+- **Artifacts & Files Updated**:
+  - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận lịch sử commit & push bản phát hành MVP đầu tiên (2 mẫu flagship).
+- **Verification & Gate Status**: Đã qua đầy đủ `npm run typecheck && npm run lint && npm run build` (root + subpath); tiến hành `git add`, `git commit`, `git push`.

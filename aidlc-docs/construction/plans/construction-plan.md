@@ -8,7 +8,7 @@
 
 ## Unit Checklist & Functional Specifications
 
-### [ ] `UNIT-01`: Core Shared Utilities & Live Preview Engine
+### [x] `UNIT-01`: Core Shared Utilities & Live Preview Engine
 - **Files**:
   - `src/lib/paths.ts`
   - `src/components/ui/SafeImage.tsx`
@@ -21,11 +21,11 @@
   - `withBasePath(path: string): string` — ghép `NEXT_PUBLIC_BASE_PATH` an toàn cho `iframe src` và asset tĩnh.
   - `ViewportMode = "desktop" | "tablet" | "mobile"` — điều khiển chiều rộng khung preview (`100%`, `768px`, `390px`) và trạng thái `isFullscreen`.
   - `generateStaticParams()` — sinh toàn bộ static routes từ `TEMPLATE_REGISTRY`.
-- **Verification Gate**: `npm run typecheck && npm run lint && npm run build`
+- **Verification Gate**: `npm run typecheck && npm run lint && npm run build` ✅
 
 ---
 
-### [ ] `UNIT-02`: Creative Agency Gallery Shell & Scaled Bento Grid
+### [x] `UNIT-02`: Creative Agency Gallery Shell & Scaled Bento Grid
 - **Files**:
   - `src/components/gallery/StudioHeader.tsx`
   - `src/components/gallery/AgencyHero.tsx`
@@ -36,13 +36,13 @@
   - `src/components/gallery/StudioFooter.tsx`
   - `src/app/page.tsx`
 - **Key Interfaces / Contracts**:
-  - `ScaledPreviewFrame({ slug, title, surfaceTone })` — dùng `IntersectionObserver` để lazy-mount `<iframe>` và `ResizeObserver` để scale mượt tỷ lệ `1440×900`.
+  - `ScaledPreviewFrame({ slug, title, surfaceTone })` — dùng `IntersectionObserver` để lazy-mount `<iframe>` và `ResizeObserver` để scale mượt tỷ lệ `1440×960`.
   - `GalleryShowcase` — quản lý state `activeCategory` (`TemplateCategoryId | "all"`) và `searchQuery`, hiển thị lưới Bento bất đối xứng kèm trạng thái rỗng rõ ràng.
-- **Verification Gate**: `npm run typecheck && npm run lint && npm run build`
+- **Verification Gate**: `npm run typecheck && npm run lint && npm run build` ✅
 
 ---
 
-### [ ] `UNIT-03`: Flagship Templates Batch 1 — Bán lẻ & Landing Page SaaS
+### [x] `UNIT-03`: Flagship Templates Batch 1 — Bán lẻ & Landing Page SaaS
 - **Files**:
   - `src/templates/lumiere-noi-that/data.ts`
   - `src/templates/lumiere-noi-that/index.tsx`
@@ -50,13 +50,13 @@
   - `src/templates/kova-ai-saas/index.tsx`
   - `src/templates/registry.ts`
 - **Key Interfaces / Contracts**:
-  - `LumiereNoiThatTemplate` — state lọc danh mục sản phẩm, chọn biến thể màu/chất liệu, giỏ hàng Drawer thêm/xóa/tăng giảm số lượng và tính tổng VND.
-  - `KovaAiSaasTemplate` — tab minh họa tính năng tương tác, chuyển đổi chu kỳ thanh toán `monthly | yearly`, FAQ accordion.
-- **Verification Gate**: `npm run typecheck && npm run lint && npm run build`
+  - `LumiereNoiThatTemplate` — state lọc danh mục sản phẩm, chọn biến thể màu/chất liệu, xem nhanh chi tiết, giỏ hàng Drawer thêm/xóa/tăng giảm số lượng và tính tổng VND.
+  - `KovaAiSaasTemplate` — bảng mô phỏng 3 luồng AI tương tác, chuyển đổi chu kỳ thanh toán `monthly | yearly`, FAQ accordion.
+- **Verification Gate**: `npm run typecheck && npm run lint && npm run build` ✅
 
 ---
 
-### [ ] `UNIT-04`: Flagship Templates Batch 2 — Technical Docs & Dashboard Analytics
+### [ ] `UNIT-04`: *(Tạm hoãn theo yêu cầu người dùng)* Flagship Templates Batch 2 — Technical Docs & Dashboard Analytics
 - **Files**:
   - `src/templates/vietcloud-docs/data.ts`
   - `src/templates/vietcloud-docs/index.tsx`
@@ -70,7 +70,7 @@
 
 ---
 
-### [ ] `UNIT-05`: Flagship Templates Batch 3 — Portfolio Creative & Dịch vụ / Hospitality
+### [ ] `UNIT-05`: *(Tạm hoãn theo yêu cầu người dùng)* Flagship Templates Batch 3 — Portfolio Creative & Dịch vụ / Hospitality
 - **Files**:
   - `src/templates/son-ha-studio/data.ts`
   - `src/templates/son-ha-studio/index.tsx`
@@ -84,11 +84,11 @@
 
 ---
 
-### [ ] `UNIT-06`: Polish, Responsive QA & Static Export Verification
+### [x] `UNIT-06`: Polish, Responsive QA & Static Export Verification
 - **Files**:
-  - Tinh chỉnh responsive/a11y/copy trong `src/` nếu cần
+  - `src/components/gallery/AgencyHero.tsx` (chuẩn hóa hiển thị đếm mẫu `padStart(2, "0")`)
   - `aidlc-docs/operations/release-and-packaging.md`
 - **Key Interfaces / Contracts**:
-  - Kiểm chứng đầy đủ file xuất tĩnh trong `out/` cho trang chủ + 6 `/templates/*` + 6 `/preview/*`.
+  - Kiểm chứng đầy đủ file xuất tĩnh trong `out/` cho trang chủ + 2 `/templates/*` + 2 `/preview/*` và kiểm chứng 8/8 ảnh Unsplash trả mã `200 OK`.
   - Kiểm chứng build subpath với `NEXT_PUBLIC_BASE_PATH=/awesome-apps-UI`.
-- **Verification Gate**: `npm run typecheck && npm run lint && npm run build`
+- **Verification Gate**: `npm run typecheck && npm run lint && npm run build` ✅

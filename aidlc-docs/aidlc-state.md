@@ -3,9 +3,9 @@
 ## Project Metadata
 - **Project Name**: Awesome UI Studio (`awesome-apps-UI`) — Thư viện trưng bày mẫu giao diện website tương tác cho khách hàng Agency / Freelancer
 - **Project Type**: Greenfield (`Next.js 16 App Router + TypeScript + Tailwind CSS v4 + Framer Motion + Lucide Icons · Static Export`)
-- **Active Phase**: `INCEPTION`
-- **Active Stage**: `Stage 1.6: Workflow Planning` (Completed) → Next: `Gate 1 Sign-Off`
-- **Last Updated**: `2026-11-27T03:05:00Z`
+- **Active Phase**: `CONSTRUCTION` (Scoped Release Complete — sẵn sàng chuyển `OPERATIONS` hoặc mở tiếp `UNIT-04` / `UNIT-05`)
+- **Active Stage**: `UNIT-06: Polish, Responsive QA & Static Export Verification` (Completed)
+- **Last Updated**: `2026-11-27T03:17:00Z`
 
 ---
 
@@ -16,23 +16,23 @@
 - [x] **Stage 1.4: Application & UI Design** — Hoàn tất kiến trúc cô lập iframe + Static Export tại [`architecture.md`](inception/application-design/architecture.md) và thiết kế Creative Agency + 6 mẫu flagship tại [`ui-design.md`](inception/application-design/ui-design.md).
 - [x] **Stage 1.5: Units Generation** — Phân rã 6 Units độc lập (`UNIT-01` → `UNIT-06`) trong [`units.md`](inception/units/units.md).
 - [x] **Stage 1.6: Workflow Planning** — Hoàn tất [`execution-plan.md`](inception/plans/execution-plan.md) và [`construction-plan.md`](construction/plans/construction-plan.md).
-- [ ] **Gate 1 Sign-Off**: Đang chờ người dùng phê duyệt để bắt đầu Phase 2 (`CONSTRUCTION`).
+- [x] **Gate 1 Sign-Off**: Đã được người dùng phê duyệt (triển khai `UNIT-01`, `UNIT-02`, `UNIT-03`, `UNIT-06`; tạm bỏ qua `UNIT-04` và `UNIT-05`).
 
 ---
 
 ## Phase 2: CONSTRUCTION Progress
-- [ ] **`UNIT-01`**: Core Shared Utilities & Live Preview Engine (`/templates/[slug]`, `/preview/[slug]`, Viewport Switcher, Prev/Next, Fullscreen)
-- [ ] **`UNIT-02`**: Creative Agency Gallery Shell & Lazy-Loaded Scaled Bento Grid (`/`)
-- [ ] **`UNIT-03`**: Flagship Templates Batch 1 — Bán lẻ (`lumiere-noi-that`) & Landing Page SaaS (`kova-ai-saas`)
-- [ ] **`UNIT-04`**: Flagship Templates Batch 2 — Technical Docs (`vietcloud-docs`) & Dashboard Analytics (`pulse-bi-dashboard`)
-- [ ] **`UNIT-05`**: Flagship Templates Batch 3 — Portfolio Creative (`son-ha-studio`) & Dịch vụ / Hospitality (`an-nhien-resort`)
-- [ ] **`UNIT-06`**: Polish, Responsive QA & Static Export Verification
-- [ ] **Full Build & Verification**: `npm run typecheck && npm run lint && npm run build`
+- [x] **`UNIT-01`**: Core Shared Utilities & Live Preview Engine (`/templates/[slug]`, `/preview/[slug]`, Viewport Switcher, Prev/Next, Fullscreen)
+- [x] **`UNIT-02`**: Creative Agency Gallery Shell & Lazy-Loaded Scaled Bento Grid (`/`)
+- [x] **`UNIT-03`**: Flagship Templates Batch 1 — Bán lẻ (`lumiere-noi-that`) & Landing Page SaaS (`kova-ai-saas`)
+- [ ] **`UNIT-04`**: *(Tạm hoãn)* Flagship Templates Batch 2 — Technical Docs (`vietcloud-docs`) & Dashboard Analytics (`pulse-bi-dashboard`)
+- [ ] **`UNIT-05`**: *(Tạm hoãn)* Flagship Templates Batch 3 — Portfolio Creative (`son-ha-studio`) & Dịch vụ / Hospitality (`an-nhien-resort`)
+- [x] **`UNIT-06`**: Polish, Responsive QA & Static Export Verification (Root + Subpath `NEXT_PUBLIC_BASE_PATH=/awesome-apps-UI` + 8/8 Unsplash HTTP 200)
+- [x] **Full Build & Verification**: `npm run typecheck && npm run lint && npm run build`
 
 ---
 
 ## Phase 3: OPERATIONS Progress
-- [ ] **Stage 3.1: Production Build & Packaging Verification** ([`release-and-packaging.md`](operations/release-and-packaging.md))
+- [x] **Stage 3.1: Production Build & Packaging Verification** ([`release-and-packaging.md`](operations/release-and-packaging.md))
 - [ ] **Stage 3.2: Release Documentation & Smoke Check**
 
 ---

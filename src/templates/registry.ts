@@ -1,3 +1,5 @@
+import { KovaAiSaasTemplate } from "./kova-ai-saas";
+import { LumiereNoiThatTemplate } from "./lumiere-noi-that";
 import type {
   TemplateCategory,
   TemplateCategoryId,
@@ -15,19 +17,22 @@ export const TEMPLATE_CATEGORIES: TemplateCategory[] = [
     id: "landing-page",
     label: "Landing Page SaaS",
     shortLabel: "Landing Page",
-    description: "Trang giới thiệu sản phẩm công nghệ sắc nét, tập trung chốt khách.",
+    description:
+      "Trang giới thiệu sản phẩm công nghệ sắc nét, tập trung chốt khách.",
   },
   {
     id: "technical",
     label: "Technical / Dev Docs",
     shortLabel: "Technical",
-    description: "Cổng tài liệu kỹ thuật, API reference và trải nghiệm lập trình viên.",
+    description:
+      "Cổng tài liệu kỹ thuật, API reference và trải nghiệm lập trình viên.",
   },
   {
     id: "dashboard",
     label: "Dashboard Analytics",
     shortLabel: "Dashboard",
-    description: "Bảng điều khiển dữ liệu thời gian thực, biểu đồ và quản trị vận hành.",
+    description:
+      "Bảng điều khiển dữ liệu thời gian thực, biểu đồ và quản trị vận hành.",
   },
   {
     id: "portfolio",
@@ -39,15 +44,58 @@ export const TEMPLATE_CATEGORIES: TemplateCategory[] = [
     id: "dich-vu",
     label: "Dịch vụ / Hospitality",
     shortLabel: "Dịch vụ",
-    description: "Trải nghiệm thương hiệu nghỉ dưỡng, nhà hàng và đặt lịch cao cấp.",
+    description:
+      "Trải nghiệm thương hiệu nghỉ dưỡng, nhà hàng và đặt lịch cao cấp.",
   },
 ];
 
 /**
  * Single source of truth for all templates rendered in the Gallery and Preview routes.
- * Populated during Construction Units (UNIT-03 through UNIT-05).
  */
-export const TEMPLATE_REGISTRY: TemplateRegistryEntry[] = [];
+export const TEMPLATE_REGISTRY: TemplateRegistryEntry[] = [
+  {
+    slug: "lumiere-noi-that",
+    name: "LUMIÈRE Nội Thất",
+    brandTitle: "LUMIÈRE Nội Thất Cao Cấp",
+    category: "ban-le",
+    tagline:
+      "Cửa hàng nội thất tối giản phong cách Bắc Âu — lọc phòng, chọn chất liệu & giỏ hàng trượt tính tiền thực tế.",
+    description:
+      "Mẫu website bán lẻ E-commerce cao cấp dành cho thương hiệu nội thất, kiến trúc và thời trang với trải nghiệm xem nhanh sản phẩm, đổi phiên bản màu và giỏ hàng tương tác đầy đủ.",
+    tags: ["Nội thất tối giản", "Giỏ hàng tương tác", "Editorial Sáng"],
+    accentColor: "#9A6B3F",
+    surfaceTone: "light",
+    bentoSpan: "wide",
+    featured: true,
+    highlights: [
+      "Bộ lọc danh mục & sắp xếp giá trực tiếp",
+      "Chọn biến thể màu/gỗ ngay trên thẻ sản phẩm",
+      "Xem nhanh chi tiết & Giỏ hàng Drawer tự tính tổng VND",
+    ],
+    Component: LumiereNoiThatTemplate,
+  },
+  {
+    slug: "kova-ai-saas",
+    name: "KOVA AI Workspace",
+    brandTitle: "KOVA AI — Tự Động Hóa Doanh Nghiệp",
+    category: "landing-page",
+    tagline:
+      "Trang giới thiệu nền tảng AI B2B sắc nét với bảng mô phỏng quy trình trực tiếp, đổi giá Tháng/Năm và FAQ.",
+    description:
+      "Mẫu Landing Page công nghệ chuẩn quốc tế 100% tiếng Việt dành cho sản phẩm SaaS, AI và phần mềm doanh nghiệp — tối ưu niềm tin và tỷ lệ đăng ký dùng thử.",
+    tags: ["SaaS & AI", "Obsidian Tối", "Bảng giá động"],
+    accentColor: "#10B981",
+    surfaceTone: "dark",
+    bentoSpan: "standard",
+    featured: true,
+    highlights: [
+      "Bảng điều khiển mô phỏng 3 quy trình AI trực tiếp",
+      "Công tắc bảng giá Tháng / Năm tiết kiệm 20%",
+      "Hệ thống câu hỏi thường gặp Accordion mượt mà",
+    ],
+    Component: KovaAiSaasTemplate,
+  },
+];
 
 export function getTemplateBySlug(
   slug: string

@@ -16,7 +16,7 @@ interface AgencyHeroProps {
 
 const EASE_EDITORIAL: [number, number, number, number] = [0.22, 1, 0.36, 1];
 const HERO_KEYWORDS = ["sống động", "tinh tế", "đẳng cấp"] as const;
-const ROTATE_INTERVAL_MS = 2600;
+const ROTATE_INTERVAL_MS = 4200;
 
 const TRUSTED_AVATARS = [
   {
@@ -152,9 +152,9 @@ function RotatingHeroKeyword() {
         }
         transition={{
           type: "spring",
-          stiffness: 260,
-          damping: 28,
-          mass: 0.78,
+          stiffness: 120,
+          damping: 24,
+          mass: 1,
         }}
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
@@ -186,7 +186,7 @@ function RotatingHeroKeyword() {
                   : { y: "-96%", opacity: 0, filter: "blur(6px)" }
               }
               transition={{
-                duration: 0.58,
+                duration: 0.95,
                 ease: EASE_EDITORIAL,
               }}
               className="absolute top-[0.18em] left-[0.04em] inline-block pr-[0.12em] pl-[0.04em] font-serif font-medium italic whitespace-nowrap text-[#F97316] will-change-transform"
@@ -209,13 +209,13 @@ function RotatingHeroKeyword() {
                 originX: 1,
                 transition: {
                   originX: { duration: 0 },
-                  duration: 0.4,
+                  duration: 0.65,
                   ease: EASE_EDITORIAL,
                 },
               }}
               transition={{
-                duration: 0.6,
-                delay: 0.08,
+                duration: 1.05,
+                delay: 0.14,
                 ease: EASE_EDITORIAL,
               }}
               className="absolute inset-0 block rounded-full bg-[#F97316]/85"
@@ -249,8 +249,10 @@ export function AgencyHero({ templateCount }: AgencyHeroProps) {
           transition={{ duration: 0.7, delay: 0.08, ease: EASE_EDITORIAL }}
           className="relative max-w-5xl text-[2.45rem] leading-[1.08] font-extrabold tracking-[-0.035em] text-[var(--text-primary)] sm:text-6xl lg:text-[4.75rem]"
         >
-          Những mẫu website <RotatingHeroKeyword /> được chế tác cho thương hiệu
-          dẫn đầu.
+          Những mẫu website được chế tác cho thương hiệu dẫn đầu —
+          <span className="mt-1.5 block">
+            <RotatingHeroKeyword />
+          </span>
         </motion.h1>
 
         {/* Asymmetric editorial bottom row */}
@@ -286,20 +288,22 @@ export function AgencyHero({ templateCount }: AgencyHeroProps) {
             </div>
 
             {/* Subtle Social Proof Row with real human portrait avatars */}
-            <div className="mt-7 flex items-center gap-3.5">
-              <div className="flex -space-x-2">
+            <div className="mt-7 flex flex-col items-start gap-2.5 min-[380px]:flex-row min-[380px]:items-center min-[380px]:gap-3.5">
+              <div className="flex shrink-0 items-center -space-x-2">
                 {TRUSTED_AVATARS.map((avatar) => (
                   /* eslint-disable-next-line @next/next/no-img-element */
                   <img
                     key={avatar.name}
                     src={avatar.src}
                     alt={avatar.name}
+                    width={32}
+                    height={32}
                     loading="eager"
-                    className="h-8 w-8 rounded-full border-2 border-[var(--bg-canvas)] object-cover"
+                    className="h-8 w-8 shrink-0 rounded-full border-2 border-[var(--bg-canvas)] object-cover"
                   />
                 ))}
               </div>
-              <p className="text-xs text-[var(--text-muted)]">
+              <p className="min-w-0 flex-1 text-xs leading-relaxed text-[var(--text-muted)]">
                 Được tin chọn bởi{" "}
                 <span className="font-semibold text-[var(--text-primary)]">
                   <AnimatedCounter

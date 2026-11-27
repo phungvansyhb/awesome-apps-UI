@@ -6,7 +6,8 @@ export type TemplateCategoryId =
   | "technical"
   | "dashboard"
   | "portfolio"
-  | "dich-vu";
+  | "dich-vu"
+  | "giao-duc";
 
 export interface TemplateCategory {
   id: TemplateCategoryId;

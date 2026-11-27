@@ -353,3 +353,106 @@
 - **Artifacts & Files Updated**:
   - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận lịch sử commit & push bản sửa lỗi.
 - **Verification & Gate Status**: Đã qua `npm run typecheck && npm run lint && npm run build` (0 lỗi, 12/12 trang tĩnh); tiến hành `git add`, `git commit`, `git push`.
+
+---
+
+## [2026-11-27T07:40:30Z] — Prompt 29: Move Hero Rotating Highlight to Final Line (`CLS = 0`) & Slow Down Animation Cadence
+- **Phase / Stage**: `CONSTRUCTION / UX Polish (AgencyHero Layout Stability & Timing)`
+- **User Input**: `"đổi vị trí hightlight text xuống cuối đi, hiện tại để ở giữa mỗi lần chuyển khiến cho layout bị vỡ, và giảm tốc độ animation xuống"`
+- **Clarifications / Decisions**:
+  - Chuyển [`RotatingHeroKeyword`](../src/components/gallery/AgencyHero.tsx) xuống dòng cuối cùng tách biệt (`block`) ở cuối tiêu đề H1 (`Những mẫu website được chế tác cho thương hiệu dẫn đầu —` / `sống động` → `tinh tế` → `đẳng cấp`), loại bỏ hoàn toàn hiện tượng nhảy dòng / vỡ layout (CLS = 0) trên mọi kích thước màn hình.
+  - Giảm tốc độ animation cho cảm giác điềm tĩnh, sang trọng hơn: tăng nhịp dừng lên `4.2s/từ`, kéo dài chuyển chữ lên `0.95s`, nét gạch chân `1.05s` (thu về `0.65s`), và spring co giãn độ rộng dịu hơn (`stiffness: 120, damping: 24`).
+- **Artifacts & Files Updated**:
+  - `src/components/gallery/AgencyHero.tsx` — Dời cụm chữ highlight xuống cuối H1 và làm chậm toàn bộ nhịp animation.
+  - [`aidlc-docs/aidlc-state.md`](aidlc-state.md), [`aidlc-docs/audit.md`](audit.md) — Cập nhật trạng thái và nhật ký kiểm toán.
+- **Verification & Gate Status**: `npm run typecheck && npm run lint && npm run build` PASS (0 lỗi, xuất tĩnh 12/12 trang).
+
+---
+
+## [2026-11-27T07:45:00Z] — Prompt 30: Fix Mobile Avatar/Text Overlap in Hero Social Proof Row
+- **Phase / Stage**: `OPERATIONS / Hotfix (AgencyHero Mobile Responsive)`
+- **User Input**: `"phần Được tin chọn bởi 40+ thương hiệu & đội nhóm tại Việt Nam khi ở màn hình mobile đang bị ảnh và chữ chồng lên nhau"`
+- **Clarifications / Decisions**:
+  - **Root Cause**: Nhóm avatar `flex -space-x-2` và các thẻ `<img>` thiếu `shrink-0`, khiến flexbox co hẹp khung chứa trên màn hình di động hẹp làm ảnh đại diện tràn đè lên đoạn chữ bên cạnh.
+  - **Fix**: Bổ sung `shrink-0` cho cả cụm avatar lẫn từng ảnh (`width={32} height={32}`), thêm `min-w-0 flex-1 leading-relaxed` cho đoạn văn bản và chuyển sang xếp dọc gọn gàng trên màn hình `< 380px` (`flex-col items-start gap-2.5 min-[380px]:flex-row min-[380px]:items-center min-[380px]:gap-3.5`).
+- **Artifacts & Files Updated**:
+  - `src/components/gallery/AgencyHero.tsx` — Sửa lỗi chồng lấn ảnh và chữ ở cụm Social Proof trên mobile.
+  - [`aidlc-docs/aidlc-state.md`](aidlc-state.md), [`aidlc-docs/audit.md`](audit.md) — Cập nhật trạng thái và nhật ký kiểm toán.
+- **Verification & Gate Status**: `npm run typecheck && npm run lint && npm run build` PASS (0 lỗi, xuất tĩnh 12/12 trang).
+
+---
+
+## [2026-11-27T07:53:00Z] — Prompt 31: Build Editorial Magazine Portfolio Template (`khoi-nguyen-portfolio`) Modeled After Reference Image
+- **Phase / Stage**: `CONSTRUCTION / New Flagship Template (Portfolio Creative — khoi-nguyen-portfolio)`
+- **User Input**: `"Làm thêm template porfolio với phong cách như ảnh đính kèm"` (kèm ảnh tham khảo `/home/antigravity/image.png`).
+- **Clarifications / Decisions**:
+  - Xây dựng mẫu Portfolio Editorial mới **`KHÔI NGUYÊN — Editorial Portfolio`** (`slug: "khoi-nguyen-portfolio"`, `category: "portfolio"`) bám sát phong cách tạp chí tương phản cao trong ảnh tham khảo: nền giấy kem ấm `#F5F4F0`, điểm nhấn đỏ son `#F44322`, than chì `#141413`.
+  - Tạo chân dung studio tách nền trong suốt (`public/images/khoi-nguyen-portrait.webp`, 134 KB) để đan lớp trực tiếp lên chữ display `KHÔI` (đỏ son) & `NGUYÊN` (than chì) cỡ siêu lớn ở Hero, kèm thẻ 3D *"Ấn phẩm mới nhất — Sống Có Chủ Đích"* và bưu thiếp nghiêng tương tác *"Thư gửi ngày mai"* có nút đóng dấu niêm phong, lật 4 bức thư và viết thử trực tiếp.
+  - Bổ sung đầy đủ các mục tương tác phía dưới: Giới thiệu & 3 tab Hành trình/Triết lý/Diễn thuyết, Tác phẩm lọc theo danh mục kèm modal đọc trích đoạn sách, Nhật ký & Tiểu luận kiểu mục lục tạp chí kèm modal đọc bài, và Footer bản tin Thư Chủ Nhật + biểu mẫu liên hệ hợp tác.
+  - Bổ sung font weight `900` cho `Be Vietnam Pro` trong `src/app/layout.tsx` để typography display nặng nét sắc sảo.
+- **Artifacts & Files Updated**:
+  - `public/images/khoi-nguyen-portrait.webp` — Chân dung studio tách nền trong suốt cho Hero đan lớp.
+  - `src/templates/khoi-nguyen-portfolio/data.ts`, `src/templates/khoi-nguyen-portfolio/index.tsx` — Dữ liệu và giao diện đầy đủ của mẫu Portfolio.
+  - `src/templates/registry.ts` — Đăng ký `khoi-nguyen-portfolio` (tự động kích hoạt bộ lọc `Portfolio`, trang `/templates/khoi-nguyen-portfolio/`, `/preview/khoi-nguyen-portfolio/`, `sitemap.xml` và bộ đếm `03` mẫu ở Hero).
+  - `src/app/layout.tsx` — Bổ sung weight `900` cho `Be_Vietnam_Pro`.
+  - [`aidlc-docs/aidlc-state.md`](aidlc-state.md), [`aidlc-docs/audit.md`](audit.md) — Cập nhật trạng thái và nhật ký kiểm toán.
+- **Verification & Gate Status**: `npm run typecheck && npm run lint && npm run build` PASS (0 lỗi, xuất tĩnh 14/14 trang gồm `/templates/khoi-nguyen-portfolio/` và `/preview/khoi-nguyen-portfolio/`).
+
+---
+
+## [2026-11-27T08:00:00Z] — Prompt 32: Build Minimalist Fine Bistro Restaurant Template (`moc-bistro-nha-hang`) Modeled After Reference Image
+- **Phase / Stage**: `CONSTRUCTION / New Flagship Template (Dịch vụ / Hospitality — moc-bistro-nha-hang)`
+- **User Input**: `"Làm thêm template restaurant với phong cách như ảnh đính kèm"` (kèm ảnh tham khảo `/home/antigravity/image.png`).
+- **Clarifications / Decisions**:
+  - Xây dựng mẫu nhà hàng Fine Bistro tối giản **`MỘC BISTRO — Nhà Hàng Ẩm Thực`** (`slug: "moc-bistro-nha-hang"`, `category: "dich-vu"`, `bentoSpan: "standard"` — hoàn thiện hàng 2 của lưới Bento `7 + 5 = 12` cột).
+  - Bám sát thẩm mỹ ảnh tham khảo: nền trắng sứ `#F8F7F6`, sắc đỏ rượu vang `#8E1F24`, nút phụ hồng phấn `#F4E4E4`, font serif thanh lịch cho điều hướng & lời dẫn, biểu trưng vô cực trong hình tròn đỏ rượu vang, đĩa món tròn chụp từ trên cao xoay chuyển mượt trên Hero, cụm 4 thẻ chọn món cắt chéo viền đỏ rượu vang đặc trưng (`SlantedCardFrame`) và trích dẫn thực khách kèm vạch dọc đỏ rượu vang đồng bộ theo món đang chọn.
+  - Tạo riêng 4 ảnh đĩa món chụp góc vuông từ trên cao và cắt tròn tách nền trong suốt (`public/images/bistro-dish-{pasta,steak,salmon,dessert}.webp`, 54–118 KB/ảnh).
+  - Bổ sung đầy đủ trải nghiệm nhà hàng tương tác: lọc thực đơn theo nhóm, Giỏ đặt món Drawer tự tính tổng VND, 3 thẻ Ưu đãi áp dụng trực tiếp vào biểu mẫu Đặt bàn (chọn ngày, số khách, khung giờ, khu vực ngồi và xuất mã giữ bàn xác nhận).
+- **Artifacts & Files Updated**:
+  - `public/images/bistro-dish-pasta.webp`, `bistro-dish-steak.webp`, `bistro-dish-salmon.webp`, `bistro-dish-dessert.webp` — 4 ảnh đĩa món chụp trên cao tách nền tròn.
+  - `src/templates/moc-bistro-nha-hang/data.ts`, `src/templates/moc-bistro-nha-hang/index.tsx` — Dữ liệu và giao diện đầy đủ của mẫu nhà hàng Mộc Bistro.
+  - `src/templates/registry.ts` — Đăng ký `moc-bistro-nha-hang` (tổng cộng 4 mẫu flagship, tự động xuất `/templates/moc-bistro-nha-hang/`, `/preview/moc-bistro-nha-hang/`, và cập nhật `sitemap.xml`).
+  - [`aidlc-docs/aidlc-state.md`](aidlc-state.md), [`aidlc-docs/audit.md`](audit.md) — Cập nhật trạng thái và nhật ký kiểm toán.
+- **Verification & Gate Status**: `npm run typecheck && npm run lint && npm run build` PASS (0 lỗi, xuất tĩnh 16/16 trang).
+
+---
+
+## [2026-11-27T08:21:00Z] — Prompt 33: Request Reference Screenshot for Shadcn Studio Hero Section 47 (Classroom Template)
+- **Phase / Stage**: `INCEPTION / Visual Reference Clarification (Classroom Template)`
+- **User Input**: `"làm thêm template cho lớp học , tham khảo ở trang [Shadcn Hero Section 47 - Shadcn Studio](https://shadcnstudio.com/preview/blocks/base/marketing-ui/hero-section/hero-section-47)"`
+- **Clarifications / Decisions**:
+  - Đã thử truy cập trực tiếp và tìm kiếm thông tin `hero-section-47` trên `shadcnstudio.com`, tuy nhiên trang preview chặn truy cập tự động (không lấy được nội dung/hình ảnh bố cục thực tế).
+  - Đề nghị người dùng gửi ảnh chụp màn hình trang `hero-section-47` (giống cách đã gửi cho mẫu Portfolio và Restaurant) để tái hiện chính xác đúng phong cách, hoặc xác nhận nếu muốn thiết kế mẫu lớp học hiện đại theo hướng đề xuất.
+- **Artifacts & Files Updated**:
+  - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận bước làm rõ tài liệu tham khảo thị giác.
+- **Verification & Gate Status**: Chưa chỉnh sửa mã nguồn; chờ ảnh chụp tham khảo từ người dùng.
+
+---
+
+## [2026-11-27T08:28:30Z] — Prompt 34: Build Interactive Visual STEM Classroom Template (`axiom-lop-hoc`) Modeled After Shadcn Hero Section 47 Screenshot
+- **Phase / Stage**: `CONSTRUCTION / New Flagship Template (Giáo dục / Lớp học — axiom-lop-hoc)`
+- **User Input**: Gửi ảnh chụp màn hình tham khảo **Shadcn Hero Section 47 — Axiom ("See the maths move.")** (`/home/antigravity/image.png`).
+- **Clarifications / Decisions**:
+  - Thêm danh mục mới `"giao-duc"` (`Giáo dục / Lớp học`) vào `TemplateCategoryId` và `TEMPLATE_CATEGORIES`.
+  - Xây dựng mẫu **`AXIOM — Lớp Học Toán Trực Quan`** (`slug: "axiom-lop-hoc"`, `category: "giao-duc"`, `bentoSpan: "wide"`) bám sát phong cách học thuật tối giản trong ảnh tham khảo: nền trắng sáng `#FCFCFD`, tiêu đề serif chính giữa *"Nhìn thấy toán học chuyển động."* kèm nét gạch sóng xanh cobalt `#2F5CE5`, phác thảo toán học chìm 2 bên lề, nút pill xanh phát sáng và nút phụ `Σ Khám phá chủ đề`.
+  - Lập trình bảng thí nghiệm đồ thị giấy kẻ ô **chạy thật 60fps (`requestAnimationFrame`)** với **4 mô phỏng tương tác trực tiếp** (chuyển qua lại bằng thanh `< SÓNG HÌNH SIN 1/4 >`):
+    1. **Sóng Hình Sin (`1/4`)**: Vòng tròn đơn vị cam đất nối đường chiếu đứt nét tới sóng sin thời gian thực, kích thước bước sóng `λ` & biên độ `A`, kéo thả trực tiếp `A`, `ω`, `φ`.
+    2. **Ném Xiên Parabol (`2/4`)**: Quỹ đạo parabol, độ cao cực đại `H`, tầm xa `R` và bóng bay trực tiếp theo `v₀`, `θ`, `g`.
+    3. **Con Lắc Đơn (`3/4`)**: Con lắc dao động gắn với đồ thị góc lệch tắt dần `θ(t)` theo `θ₀`, `L`, `γ`.
+    4. **Lãi Kép (`4/4`)**: Đường cong hàm mũ đối chiếu đường thẳng lãi đơn theo `P`, `r`, `t`.
+  - Hoàn thiện các phần lớp học bên dưới: Thư viện chủ đề lọc theo nhánh (bấm *"Mở đồ thị"* chuyển thẳng lên mô phỏng tương ứng), Lộ trình 3 khóa học kèm đề cương & modal xem giáo án mẫu, Dành cho giáo viên/trường học, Học phí Tháng/Năm và modal đăng ký Học sinh/Giáo viên.
+- **Artifacts & Files Updated**:
+  - `src/templates/axiom-lop-hoc/data.ts`, `src/templates/axiom-lop-hoc/index.tsx` — Dữ liệu và giao diện đầy đủ mẫu lớp học tương tác Axiom.
+  - `src/templates/types.ts`, `src/templates/registry.ts` — Bổ sung danh mục `"giao-duc"` và đăng ký `axiom-lop-hoc` (5 mẫu flagship).
+  - [`aidlc-docs/aidlc-state.md`](aidlc-state.md), [`aidlc-docs/audit.md`](audit.md) — Cập nhật trạng thái và nhật ký kiểm toán.
+- **Verification & Gate Status**: `npm run typecheck && npm run lint && npm run build` PASS (0 lỗi, xuất tĩnh 18/18 trang).
+
+---
+
+## [2026-11-27T09:14:10Z] — Prompt 35: Commit & Push Hero Polish, Mobile Social Proof Fix & 3 New Flagship Templates (`khoi-nguyen-portfolio`, `moc-bistro-nha-hang`, `axiom-lop-hoc`)
+- **Phase / Stage**: `OPERATIONS / Release Deployment`
+- **User Input**: `"commit và push"`
+- **Clarifications / Decisions**: Commit toàn bộ thay đổi gồm dời chữ highlight Hero xuống dòng cuối & giảm tốc độ animation, sửa lỗi chồng lấn avatar/chữ Social Proof trên mobile, bổ sung font weight `900` cho `Be Vietnam Pro`, thêm danh mục `"giao-duc"` và 3 mẫu flagship mới (**KHÔI NGUYÊN Editorial Portfolio**, **MỘC BISTRO Nhà Hàng**, **AXIOM Lớp Học Toán Trực Quan**) kèm ảnh WebP tách nền, sau đó đẩy lên `origin/main`.
+- **Artifacts & Files Updated**:
+  - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận lịch sử commit & push.
+- **Verification & Gate Status**: Đã qua `npm run typecheck && npm run lint && npm run build` (0 lỗi, 18/18 trang tĩnh); tiến hành `git add`, `git commit`, `git push`.

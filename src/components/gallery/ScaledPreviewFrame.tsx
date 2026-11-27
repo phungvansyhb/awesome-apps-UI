@@ -10,7 +10,7 @@ interface ScaledPreviewFrameProps {
 }
 
 const VIRTUAL_WIDTH = 1440;
-const VIRTUAL_HEIGHT = 960;
+const VIRTUAL_HEIGHT = 1140;
 
 export function ScaledPreviewFrame({
   slug,

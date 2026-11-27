@@ -456,3 +456,68 @@
 - **Artifacts & Files Updated**:
   - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận lịch sử commit & push.
 - **Verification & Gate Status**: Đã qua `npm run typecheck && npm run lint && npm run build` (0 lỗi, 18/18 trang tĩnh); tiến hành `git add`, `git commit`, `git push`.
+
+---
+
+## [2026-11-27T09:22:45Z] — Prompt 36: Keep Hero Highlight Keyword Inline on Same Line with Fixed Max-Word Slot Width
+- **Phase / Stage**: `OPERATIONS / Hotfix (AgencyHero Inline Alignment)`
+- **User Input**: `"phần chữ hightlight ở hero section  đang bị xuống dòng , nó phải ở cùng dòng với nhưng chữ khác"`
+- **Clarifications / Decisions**:
+  - Gỡ thẻ `<span className="mt-1.5 block">` để [`RotatingHeroKeyword`](../src/components/gallery/AgencyHero.tsx) nằm **cùng dòng (inline)** ngay sau `Những mẫu website được chế tác cho thương hiệu dẫn đầu —`.
+  - Khóa độ rộng khung inline bên ngoài bằng từ dài nhất (`"sống động"`) để không bao giờ bị rớt dòng hay giật layout khi chuyển từ, trong khi nét gạch chân động phía dưới vẫn co giãn chính xác theo độ rộng thực của từng từ đang hiển thị (`sống động`, `tinh tế`, `đẳng cấp`).
+- **Artifacts & Files Updated**:
+  - `src/components/gallery/AgencyHero.tsx` — Giữ cụm highlight inline cùng dòng với tiêu đề H1 và cố định độ rộng slot chống rớt dòng.
+  - [`aidlc-docs/aidlc-state.md`](aidlc-state.md), [`aidlc-docs/audit.md`](audit.md) — Cập nhật trạng thái và nhật ký kiểm toán.
+- **Verification & Gate Status**: `npm run typecheck && npm run lint && npm run build` PASS (0 lỗi, xuất tĩnh 18/18 trang).
+
+---
+
+## [2026-11-27T09:29:15Z] — Prompt 37: Upgrade `ShowcaseMarquee` with Larger Photography-Rich Cards Covering All 5 Flagship Templates
+- **Phase / Stage**: `CONSTRUCTION / UX Redesign (ShowcaseMarquee)`
+- **User Input**: `"phần marque khối giao diện tương tác nổi bật hiện đang hơi xấu, hãy cho nó có nhiều hình ảnh , kích cỡ một chút "`
+- **Clarifications / Decisions**:
+  - Nâng kích cỡ mỗi thẻ Marquee từ `w-[275px]` / chiều cao ảnh `h-24` (`96px`) lên **`w-[325px] sm:w-[375px]`** và khung visual **`h-44 sm:h-48` (`176–192px`)** gấp đôi diện tích hiển thị, kèm nhịp cuộn êm hơn (`40s` / `44s`).
+  - Thay toàn bộ các khối wireframe thanh xám đơn điệu bằng **8 thẻ trưng bày giàu hình ảnh thực tế** đại diện trọn bộ 5 mẫu flagship (`KHÔI NGUYÊN Portfolio` với chân dung cutout, `MỘC BISTRO` với 4 đĩa món chụp trên cao, `LUMIÈRE Nội Thất` với ảnh lookbook & sofa Unsplash đã kiểm chứng, `AXIOM Lớp Học` với đồ thị vòng tròn lượng giác + sóng sin, và `KOVA AI` với bảng phân tích dark-mode có biểu đồ & thông số thật).
+- **Artifacts & Files Updated**:
+  - `src/components/gallery/ShowcaseMarquee.tsx` — Thiết kế lại 8 thẻ visual giàu ảnh thực tế và tăng kích cỡ gấp đôi.
+  - `src/app/globals.css` — Điều chỉnh tốc độ cuộn `marquee-track-left` (`40s`) & `marquee-track-right` (`44s`) phù hợp kích cỡ thẻ lớn hơn.
+  - [`aidlc-docs/aidlc-state.md`](aidlc-state.md), [`aidlc-docs/audit.md`](audit.md) — Cập nhật trạng thái và nhật ký kiểm toán.
+- **Verification & Gate Status**: `npm run typecheck && npm run lint && npm run build` PASS (0 lỗi, xuất tĩnh 18/18 trang).
+
+---
+
+## [2026-11-27T09:32:00Z] — Prompt 38: UX Evaluation of Bento Grid Layout for `GalleryShowcase` Template Collection
+- **Phase / Stage**: `OPERATIONS / Design Critique & Consultation`
+- **User Input**: `"phần bộ sưu tập template nếu trình bài theo layout bentogrid có hợp không?"`
+- **Clarifications / Decisions**:
+  - Phân tích thực trạng hiện tại của `GalleryShowcase.tsx` & `TemplateCard.tsx` (đang dùng lưới 12 cột `7 + 5`, gặp 3 vấn đề thực tế: lệch chiều cao khung `aspect-[16/10]` giữa ô 7 và 5 cột, hàng 3 bị hở 5 cột trống với 5 mẫu hiện có, và thẻ đơn bị lệch trái khi lọc danh mục).
+  - Đánh giá mức độ phù hợp: **Hợp với định vị Creative Studio nếu tinh chỉnh lại nhịp Bento**, đồng thời đề xuất 3 phương án nâng cấp cụ thể (Bento cân bằng chiều cao + nhịp `7+5` / `5+7` + thẻ CTA lấp ô lẻ; Lưới 2 cột cân xứng kiểu Framer/Awwwards; hoặc True Bento kết hợp thẻ dọc Mobile Preview).
+- **Artifacts & Files Updated**:
+  - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận phiên tư vấn bố cục bộ sưu tập template.
+- **Verification & Gate Status**: Không chỉnh sửa mã nguồn ứng dụng; chờ người dùng chọn phương án bố cục mong muốn.
+
+---
+
+## [2026-11-27T09:35:00Z] — Prompt 39: Implement Balanced Alternating Bento Grid (`7+5` / `5+7`), Uniform Row Preview Height & Auto-Balanced Custom Studio CTA Tile
+- **Phase / Stage**: `CONSTRUCTION / UX Upgrade (GalleryShowcase & TemplateCard)`
+- **User Input**: `"1"` (chọn Phương án 1 — Bento Grid Cân Bằng Thông Minh).
+- **Clarifications / Decisions**:
+  - Áp dụng nhịp Bento đan xen tự động theo hàng (`getBentoColSpan`): Hàng chẵn `7 + 5` → Hàng lẻ `5 + 7`.
+  - Đồng bộ chiều cao khung Live Preview trên cùng một hàng (`h-[235px] sm:h-[310px] lg:h-[360px]`) và nâng `VIRTUAL_HEIGHT` trong `ScaledPreviewFrame` lên `1140px` để thẻ 5 cột phủ kín chiều cao không hở đáy hay dư khoảng trắng.
+  - Tự động bổ sung thẻ **Studio CTA *"Chưa thấy đúng ngành hàng của bạn? Đặt thiết kế riêng"*** vào ô còn lại bất cứ khi nào số mẫu hiển thị là số lẻ (kể cả lúc xem tất cả 5 mẫu hoặc lúc lọc ra 1 mẫu), bảo đảm lưới luôn kín **12/12 cột**.
+- **Artifacts & Files Updated**:
+  - `src/components/gallery/ScaledPreviewFrame.tsx` — Nâng `VIRTUAL_HEIGHT` lên `1140px`.
+  - `src/components/gallery/TemplateCard.tsx` — Hỗ trợ `colSpanClass` linh hoạt và chiều cao khung preview đồng đều trên mỗi hàng.
+  - `src/components/gallery/GalleryShowcase.tsx` — Triển khai nhịp Bento `7+5` / `5+7` và thẻ Studio CTA tự động lấp ô lẻ.
+  - [`aidlc-docs/aidlc-state.md`](aidlc-state.md), [`aidlc-docs/audit.md`](audit.md) — Cập nhật trạng thái và nhật ký kiểm toán.
+- **Verification & Gate Status**: `npm run typecheck && npm run lint && npm run build` PASS (0 lỗi, xuất tĩnh 18/18 trang).
+
+---
+
+## [2026-11-27T09:36:30Z] — Prompt 40: Commit & Push Inline Hero Keyword, Upgraded Image-Rich `ShowcaseMarquee` & Balanced Alternating Bento Grid
+- **Phase / Stage**: `OPERATIONS / Release Deployment`
+- **User Input**: `"commit và push"`
+- **Clarifications / Decisions**: Commit toàn bộ thay đổi gồm căn chữ highlight Hero cùng dòng không giật layout, nâng cấp dải `ShowcaseMarquee` cỡ lớn giàu hình ảnh từ cả 5 mẫu flagship, và tối ưu lưới Bento đan xen `7+5` / `5+7` đồng đều chiều cao kèm thẻ Studio CTA lấp kín ô lẻ, sau đó đẩy lên `origin/main`.
+- **Artifacts & Files Updated**:
+  - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận lịch sử commit & push.
+- **Verification & Gate Status**: Đã qua `npm run typecheck && npm run lint && npm run build` (0 lỗi, 18/18 trang tĩnh); tiến hành `git add`, `git commit`, `git push`.

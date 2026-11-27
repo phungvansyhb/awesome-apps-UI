@@ -10,17 +10,19 @@ import { ScaledPreviewFrame } from "./ScaledPreviewFrame";
 interface TemplateCardProps {
   template: TemplateMetadata;
   index: number;
+  colSpanClass?: string;
 }
 
-export function TemplateCard({ template, index }: TemplateCardProps) {
+export function TemplateCard({
+  template,
+  index,
+  colSpanClass,
+}: TemplateCardProps) {
   const categoryLabel = getCategoryLabel(template.category);
 
   const spanClass =
-    template.bentoSpan === "wide"
-      ? "lg:col-span-7"
-      : template.bentoSpan === "tall"
-        ? "lg:col-span-5"
-        : "lg:col-span-5";
+    colSpanClass ??
+    (template.bentoSpan === "wide" ? "lg:col-span-7" : "lg:col-span-5");
 
   return (
     <motion.article
@@ -40,8 +42,8 @@ export function TemplateCard({ template, index }: TemplateCardProps) {
         href={`/templates/${template.slug}/`}
         className="flex h-full flex-col overflow-hidden rounded-[22px] border border-[var(--border-subtle)] bg-[var(--bg-surface)] p-3.5 transition-all duration-300 hover:-translate-y-1 hover:border-[var(--text-muted)] hover:shadow-[0_24px_60px_rgba(0,0,0,0.12)] sm:p-4"
       >
-        {/* Live scaled preview stage */}
-        <div className="relative aspect-[16/10] w-full overflow-hidden">
+        {/* Uniform-height live scaled preview stage keeps every Bento row flush */}
+        <div className="relative h-[235px] w-full overflow-hidden sm:h-[310px] lg:h-[360px]">
           <ScaledPreviewFrame
             slug={template.slug}
             title={template.name}

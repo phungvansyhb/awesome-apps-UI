@@ -5,7 +5,7 @@
 - **Project Type**: Greenfield (`Next.js 16 App Router + TypeScript + Tailwind CSS v4 + Framer Motion + Lucide Icons · Static Export`)
 - **Active Phase**: `CONSTRUCTION` (Scoped Release + `UNIT-07` & `UNIT-08` Complete)
 - **Active Stage**: `UNIT-08` Completed + `khoi-nguyen-portfolio`, `moc-bistro-nha-hang` & `axiom-lop-hoc` Added (5 Flagship Templates Live)
-- **Last Updated**: `2026-11-27T08:28:30Z`
+- **Last Updated**: `2026-11-27T09:35:00Z`
 
 ---
 

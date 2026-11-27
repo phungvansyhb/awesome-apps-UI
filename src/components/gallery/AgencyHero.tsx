@@ -135,34 +135,24 @@ function RotatingHeroKeyword() {
     <>
       <span className="sr-only">{HERO_KEYWORDS.join(", ")}</span>
 
-      {/* Hidden measurer inside H1 typography context for exact responsive spring width */}
+      {/* Hidden measurer inside H1 typography context for exact active-word underline width */}
       <span
         ref={measureRef}
         aria-hidden="true"
-        className="pointer-events-none invisible absolute top-0 left-0 pr-[0.12em] pl-[0.04em] font-serif font-medium italic whitespace-nowrap select-none"
+        className="pointer-events-none invisible absolute top-0 left-0 font-serif font-medium italic whitespace-nowrap select-none"
       >
         {activeWord}
       </span>
 
-      <motion.span
+      <span
         aria-hidden="true"
-        initial={false}
-        animate={
-          measuredWidth !== null ? { width: measuredWidth } : undefined
-        }
-        transition={{
-          type: "spring",
-          stiffness: 120,
-          damping: 24,
-          mass: 1,
-        }}
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
         className="relative inline-block align-baseline whitespace-nowrap"
       >
-        {/* In-flow invisible strut preserves native Playfair Display baseline & line-height */}
+        {/* Fixed widest-word strut locks inline slot width across all words (zero line-wrap shift) */}
         <span className="invisible inline-block pr-[0.12em] pl-[0.04em] font-serif font-medium italic whitespace-nowrap select-none">
-          {activeWord}
+          {HERO_KEYWORDS[0]}
         </span>
 
         {/* Soft vertical mask generously padded for Vietnamese diacritics & italic overhang */}
@@ -196,8 +186,21 @@ function RotatingHeroKeyword() {
           </AnimatePresence>
         </span>
 
-        {/* Editorial animated underline synchronized with each keyword */}
-        <span className="pointer-events-none absolute right-[0.08em] bottom-[0.01em] left-[0.03em] h-[2px] overflow-hidden rounded-full sm:h-[2.5px]">
+        {/* Editorial animated underline sized accurately to each active word */}
+        <motion.span
+          initial={false}
+          animate={
+            measuredWidth !== null ? { width: measuredWidth } : undefined
+          }
+          transition={{
+            type: "spring",
+            stiffness: 140,
+            damping: 26,
+            mass: 0.9,
+          }}
+          className="pointer-events-none absolute bottom-[0.01em] left-[0.04em] h-[2px] max-w-full overflow-hidden rounded-full sm:h-[2.5px]"
+          style={measuredWidth === null ? { right: "0.1em" } : undefined}
+        >
           <AnimatePresence mode="sync" initial={false}>
             <motion.span
               key={`underline-${activeWord}`}
@@ -221,8 +224,8 @@ function RotatingHeroKeyword() {
               className="absolute inset-0 block rounded-full bg-[#F97316]/85"
             />
           </AnimatePresence>
-        </span>
-      </motion.span>
+        </motion.span>
+      </span>
     </>
   );
 }
@@ -249,10 +252,8 @@ export function AgencyHero({ templateCount }: AgencyHeroProps) {
           transition={{ duration: 0.7, delay: 0.08, ease: EASE_EDITORIAL }}
           className="relative max-w-5xl text-[2.45rem] leading-[1.08] font-extrabold tracking-[-0.035em] text-[var(--text-primary)] sm:text-6xl lg:text-[4.75rem]"
         >
-          Những mẫu website được chế tác cho thương hiệu dẫn đầu —
-          <span className="mt-1.5 block">
-            <RotatingHeroKeyword />
-          </span>
+          Những mẫu website được chế tác cho thương hiệu dẫn đầu —{" "}
+          <RotatingHeroKeyword />
         </motion.h1>
 
         {/* Asymmetric editorial bottom row */}

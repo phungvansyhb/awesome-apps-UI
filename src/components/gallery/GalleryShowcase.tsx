@@ -2,10 +2,27 @@
 
 import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowUpRight, Search, X } from "lucide-react";
+import {
+  ArrowUpRight,
+  Check,
+  MessageCircle,
+  Search,
+  Sparkles,
+  X,
+} from "lucide-react";
+import { siteConfig } from "@/config/site";
 import { TEMPLATE_CATEGORIES } from "@/templates/registry";
 import type { TemplateCategoryId, TemplateMetadata } from "@/templates/types";
 import { TemplateCard } from "./TemplateCard";
+
+function getBentoColSpan(index: number): string {
+  const row = Math.floor(index / 2);
+  const isLeft = index % 2 === 0;
+  if (row % 2 === 0) {
+    return isLeft ? "lg:col-span-7" : "lg:col-span-5";
+  }
+  return isLeft ? "lg:col-span-5" : "lg:col-span-7";
+}
 
 interface GalleryShowcaseProps {
   templates: TemplateMetadata[];
@@ -151,7 +168,7 @@ export function GalleryShowcase({ templates }: GalleryShowcaseProps) {
         })}
       </div>
 
-      {/* Bento Grid */}
+      {/* Balanced Alternating Bento Grid (7+5 → 5+7) */}
       <motion.div
         layout
         className="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-12"
@@ -162,8 +179,86 @@ export function GalleryShowcase({ templates }: GalleryShowcaseProps) {
               key={template.slug}
               template={template}
               index={index}
+              colSpanClass={getBentoColSpan(index)}
             />
           ))}
+
+          {/* Auto-completes any odd Bento row to a clean 12/12 grid */}
+          {filteredTemplates.length > 0 &&
+            filteredTemplates.length % 2 === 1 && (
+              <motion.aside
+                key="bento-custom-studio-cta"
+                layout
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, scale: 0.98 }}
+                transition={{
+                  duration: 0.45,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+                className={`flex flex-col ${getBentoColSpan(filteredTemplates.length)}`}
+              >
+                <div className="relative flex h-full flex-col justify-between overflow-hidden rounded-[22px] border border-dashed border-[var(--border-subtle)] bg-[var(--bg-surface)] p-6 transition-all duration-300 hover:border-[var(--text-muted)] hover:shadow-[0_24px_60px_rgba(0,0,0,0.08)] sm:p-8">
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute -top-20 -right-20 h-56 w-56 rounded-full bg-[var(--accent-highlight)]/10 blur-3xl"
+                  />
+
+                  <div className="relative z-10">
+                    <div className="inline-flex items-center gap-2 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-subtle)] px-3 py-1 text-[11px] font-semibold text-[var(--text-secondary)]">
+                      <Sparkles className="h-3.5 w-3.5 text-[var(--accent-highlight)]" />
+                      <span>Thiết kế may đo theo thương hiệu</span>
+                    </div>
+
+                    <h3 className="mt-5 text-2xl leading-tight font-bold tracking-tight text-[var(--text-primary)] sm:text-3xl">
+                      Chưa thấy đúng ngành hàng của bạn?
+                    </h3>
+                    <p className="mt-3 text-sm leading-relaxed text-[var(--text-secondary)]">
+                      Gửi yêu cầu hoặc ảnh phong cách bạn thích — đội ngũ{" "}
+                      <span className="font-semibold text-[var(--text-primary)]">
+                        {siteConfig.brandName}
+                      </span>{" "}
+                      dựng bản mẫu tương tác riêng theo nhận diện thương hiệu chỉ
+                      trong 5–10 ngày.
+                    </p>
+
+                    <ul className="mt-6 space-y-2.5 border-t border-dashed border-[var(--border-subtle)] pt-5 text-xs text-[var(--text-secondary)]">
+                      {[
+                        "Xem thử giao diện chạy thật trên Desktop, Tablet & Mobile",
+                        "Tùy biến 100% bảng màu, phông chữ tiếng Việt & nội dung",
+                        "Tối ưu tốc độ tải trang, SEO kỹ thuật & bàn giao mã sạch",
+                      ].map((item) => (
+                        <li key={item} className="flex items-start gap-2.5">
+                          <span className="mt-0.5 flex h-4 w-4 shrink-0 items-center justify-center rounded-full bg-[var(--accent-highlight)]/15 text-[var(--accent-highlight)]">
+                            <Check className="h-2.5 w-2.5 stroke-[3]" />
+                          </span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+
+                  <div className="relative z-10 mt-8 flex flex-wrap items-center gap-3 border-t border-[var(--border-subtle)]/80 pt-5">
+                    <a
+                      href="#lien-he"
+                      className="inline-flex items-center gap-1.5 rounded-full bg-[var(--accent-primary)] px-5 py-2.5 text-xs font-semibold text-[var(--accent-primary-fg)] transition-opacity hover:opacity-90"
+                    >
+                      <span>Đặt thiết kế riêng</span>
+                      <ArrowUpRight className="h-3.5 w-3.5" />
+                    </a>
+                    <a
+                      href={siteConfig.contact.zaloUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-1.5 rounded-full border border-[var(--border-subtle)] bg-[var(--bg-canvas)] px-4 py-2.5 text-xs font-semibold text-[var(--text-primary)] transition-colors hover:border-[var(--text-muted)]"
+                    >
+                      <MessageCircle className="h-3.5 w-3.5" />
+                      <span>Nhắn Zalo tư vấn</span>
+                    </a>
+                  </div>
+                </div>
+              </motion.aside>
+            )}
         </AnimatePresence>
       </motion.div>
 

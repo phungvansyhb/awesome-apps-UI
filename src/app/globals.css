@@ -77,14 +77,14 @@ html {
   display: flex;
   width: max-content;
   will-change: transform;
-  animation: xgd-marquee-left 26s linear infinite;
+  animation: xgd-marquee-left 40s linear infinite;
 }
 
 .marquee-track-right {
   display: flex;
   width: max-content;
   will-change: transform;
-  animation: xgd-marquee-right 30s linear infinite;
+  animation: xgd-marquee-right 44s linear infinite;
 }
 
 .marquee-track-left:hover,

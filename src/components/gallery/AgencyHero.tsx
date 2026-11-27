@@ -16,7 +16,7 @@ interface AgencyHeroProps {
 
 const EASE_EDITORIAL: [number, number, number, number] = [0.22, 1, 0.36, 1];
 const HERO_KEYWORDS = ["sống động", "tinh tế", "đẳng cấp"] as const;
-const ROTATE_INTERVAL_MS = 2800;
+const ROTATE_INTERVAL_MS = 2600;
 
 const TRUSTED_AVATARS = [
   {
@@ -90,21 +90,19 @@ function RotatingHeroKeyword() {
   const [measuredWidth, setMeasuredWidth] = useState<number | null>(null);
   const measureRef = useRef<HTMLSpanElement | null>(null);
 
-  const activeWord = prefersReducedMotion
-    ? HERO_KEYWORDS[0]
-    : HERO_KEYWORDS[activeIndex];
+  const activeWord = HERO_KEYWORDS[activeIndex];
 
   useEffect(() => {
-    if (prefersReducedMotion || isPaused) return;
+    if (isPaused) return;
 
     const intervalId = window.setInterval(() => {
-      if (document.visibilityState === "visible") {
+      if (document.visibilityState !== "hidden") {
         setActiveIndex((prev) => (prev + 1) % HERO_KEYWORDS.length);
       }
     }, ROTATE_INTERVAL_MS);
 
     return () => window.clearInterval(intervalId);
-  }, [isPaused, prefersReducedMotion]);
+  }, [isPaused]);
 
   useEffect(() => {
     const node = measureRef.current;
@@ -152,11 +150,12 @@ function RotatingHeroKeyword() {
         animate={
           measuredWidth !== null ? { width: measuredWidth } : undefined
         }
-        transition={
-          prefersReducedMotion
-            ? { duration: 0 }
-            : { type: "spring", stiffness: 260, damping: 28, mass: 0.78 }
-        }
+        transition={{
+          type: "spring",
+          stiffness: 260,
+          damping: 28,
+          mass: 0.78,
+        }}
         onMouseEnter={() => setIsPaused(true)}
         onMouseLeave={() => setIsPaused(false)}
         className="relative inline-block align-baseline whitespace-nowrap"
@@ -173,20 +172,24 @@ function RotatingHeroKeyword() {
               key={activeWord}
               initial={
                 prefersReducedMotion
-                  ? { opacity: 1, y: "0%" }
-                  : { y: "96%", opacity: 0, filter: "blur(7px)" }
+                  ? { y: "75%", opacity: 0 }
+                  : { y: "96%", opacity: 0, filter: "blur(6px)" }
               }
-              animate={{ y: "0%", opacity: 1, filter: "blur(0px)" }}
+              animate={
+                prefersReducedMotion
+                  ? { y: "0%", opacity: 1 }
+                  : { y: "0%", opacity: 1, filter: "blur(0px)" }
+              }
               exit={
                 prefersReducedMotion
-                  ? { opacity: 0 }
-                  : { y: "-96%", opacity: 0, filter: "blur(7px)" }
+                  ? { y: "-75%", opacity: 0 }
+                  : { y: "-96%", opacity: 0, filter: "blur(6px)" }
               }
               transition={{
-                duration: prefersReducedMotion ? 0 : 0.62,
+                duration: 0.58,
                 ease: EASE_EDITORIAL,
               }}
-              className="hero-keyword-shimmer absolute top-[0.18em] left-[0.04em] inline-block pr-[0.12em] pl-[0.04em] font-serif font-medium italic whitespace-nowrap will-change-transform"
+              className="absolute top-[0.18em] left-[0.04em] inline-block pr-[0.12em] pl-[0.04em] font-serif font-medium italic whitespace-nowrap text-[#F97316] will-change-transform"
             >
               {activeWord}
             </motion.span>
@@ -198,32 +201,24 @@ function RotatingHeroKeyword() {
           <AnimatePresence mode="sync" initial={false}>
             <motion.span
               key={`underline-${activeWord}`}
-              initial={
-                prefersReducedMotion
-                  ? { scaleX: 1, opacity: 1, originX: 0 }
-                  : { scaleX: 0, opacity: 0.25, originX: 0 }
-              }
+              initial={{ scaleX: 0, opacity: 0.25, originX: 0 }}
               animate={{ scaleX: 1, opacity: 1, originX: 0 }}
-              exit={
-                prefersReducedMotion
-                  ? { opacity: 0 }
-                  : {
-                      scaleX: 0,
-                      opacity: 0,
-                      originX: 1,
-                      transition: {
-                        originX: { duration: 0 },
-                        duration: 0.42,
-                        ease: EASE_EDITORIAL,
-                      },
-                    }
-              }
+              exit={{
+                scaleX: 0,
+                opacity: 0,
+                originX: 1,
+                transition: {
+                  originX: { duration: 0 },
+                  duration: 0.4,
+                  ease: EASE_EDITORIAL,
+                },
+              }}
               transition={{
-                duration: prefersReducedMotion ? 0 : 0.64,
-                delay: prefersReducedMotion ? 0 : 0.08,
+                duration: 0.6,
+                delay: 0.08,
                 ease: EASE_EDITORIAL,
               }}
-              className="hero-keyword-underline absolute inset-0 block rounded-full"
+              className="absolute inset-0 block rounded-full bg-[#F97316]/85"
             />
           </AnimatePresence>
         </span>

@@ -328,3 +328,28 @@
 - **Artifacts & Files Updated**:
   - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận lịch sử commit & push.
 - **Verification & Gate Status**: Đã qua `npm run typecheck && npm run lint && npm run build` (0 lỗi, 12/12 trang tĩnh); tiến hành `git add`, `git commit`, `git push`.
+
+---
+
+## [2026-11-27T07:32:40Z] — Prompt 27: Hotfix `RotatingHeroKeyword` Reduced-Motion Freeze & Unify Highlight Color to Footer `#F97316`
+- **Phase / Stage**: `OPERATIONS / Hotfix (AgencyHero RotatingHeroKeyword)`
+- **User Input**: `"phần chữ highlight ở hero section không hoạt động , thêm vào đó màu không đẹp, thôi để màu giống ở footer đi"`
+- **Clarifications / Decisions**:
+  - **Root Cause**: `RotatingHeroKeyword` trước đó chặn `setInterval` và khóa cứng từ khóa tại `"sống động"` khi hệ điều hành bật `prefers-reduced-motion: reduce` (cùng nguyên nhân từng xảy ra ở `ShowcaseMarquee` tại Prompt 12).
+  - **Fix**: Gỡ điều kiện đóng băng vòng lặp theo `prefers-reduced-motion` để chuỗi `sống động` → `tinh tế` → `đẳng cấp` luôn vận hành mượt mà trên mọi thiết bị (chỉ giảm bớt `filter: blur` khi OS bật reduced-motion), điều chỉnh nhịp `2.6s/từ`.
+  - **Màu sắc**: Thay gradient shimmer bằng màu cam đồng nhất `text-[#F97316]` và nét gạch chân `bg-[#F97316]/85` khớp chính xác với chữ highlight trong `StudioFooter.tsx`, đồng thời dọn bỏ CSS shimmer thừa trong `globals.css`.
+- **Artifacts & Files Updated**:
+  - `src/components/gallery/AgencyHero.tsx` — Sửa lỗi đứng yên khi OS bật reduced-motion và đổi màu highlight sang `#F97316`.
+  - `src/app/globals.css` — Dọn dẹp token & keyframes shimmer không còn sử dụng.
+  - [`aidlc-docs/aidlc-state.md`](aidlc-state.md), [`aidlc-docs/audit.md`](audit.md) — Cập nhật trạng thái và nhật ký kiểm toán.
+- **Verification & Gate Status**: `npm run typecheck && npm run lint && npm run build` PASS (0 lỗi, xuất tĩnh 12/12 trang).
+
+---
+
+## [2026-11-27T07:34:05Z] — Prompt 28: Commit & Push `RotatingHeroKeyword` Reduced-Motion Hotfix & `#F97316` Footer Color Alignment
+- **Phase / Stage**: `OPERATIONS / Hotfix Deployment`
+- **User Input**: `"commit và push"`
+- **Clarifications / Decisions**: Commit bản sửa lỗi đứng yên của hiệu ứng chữ Hero trên thiết bị bật reduced-motion và đổi màu chữ highlight sang `#F97316` giống Footer (`src/components/gallery/AgencyHero.tsx`, `src/app/globals.css`), sau đó đẩy lên `origin/main`.
+- **Artifacts & Files Updated**:
+  - [`aidlc-docs/audit.md`](audit.md) — Ghi nhận lịch sử commit & push bản sửa lỗi.
+- **Verification & Gate Status**: Đã qua `npm run typecheck && npm run lint && npm run build` (0 lỗi, 12/12 trang tĩnh); tiến hành `git add`, `git commit`, `git push`.
